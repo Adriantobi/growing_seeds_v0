@@ -60,66 +60,6 @@ export default function Dashboard() {
                 category: "Partnership",
                 paymentMethod: "Cheque",
               },
-              {
-                member: {
-                  name: "John Doe",
-                  image: "https://randomuser.me/api/portraits/men/34.jpg",
-                },
-                amount: "£200",
-                date: "Nov, 02 2023",
-                time: "12:00 PM",
-                status: "Settled",
-                category: "Offering",
-                paymentMethod: "Cash",
-              },
-              {
-                member: {
-                  name: "Miguel Smith",
-                  image: "https://randomuser.me/api/portraits/men/12.jpg",
-                },
-                amount: "£100",
-                date: "Sep, 12 2023",
-                time: "09:00 AM",
-                status: "Not Settled",
-                category: "Partnership",
-                paymentMethod: "KingsPay",
-              },
-              {
-                member: {
-                  name: "Jane Doe",
-                  image: "https://randomuser.me/api/portraits/women/21.jpg",
-                },
-                amount: "£50",
-                date: "Sep, 12 2023",
-                time: "09:00 AM",
-                status: "Settled",
-                category: "Offering",
-                paymentMethod: "Bank Transfer",
-              },
-              {
-                member: {
-                  name: "John Doe",
-                  image: "https://randomuser.me/api/portraits/men/34.jpg",
-                },
-                amount: "£100",
-                date: "Sep, 12 2023",
-                time: "09:00 AM",
-                status: "Settled",
-                category: "Offering",
-                paymentMethod: "Cheque",
-              },
-              {
-                member: {
-                  name: "Thomas Clark",
-                  image: "https://randomuser.me/api/portraits/men/45.jpg",
-                },
-                amount: "£50",
-                date: "Sep, 12 2023",
-                time: "09:00 AM",
-                status: "Not Settled",
-                category: "Tithes",
-                paymentMethod: "Cash",
-              },
             ]}
             templates={{
               member: (member) => (

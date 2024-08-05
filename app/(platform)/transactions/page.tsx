@@ -1,6 +1,8 @@
+"use client";
 import { Table } from "@/components/table/table";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 function cuid() {
   const base = "0123456789abcdefghijklmnopqrstuvwxyz";
@@ -99,7 +101,23 @@ function generateTransactionData(count: number) {
 }
 
 export default function Transactions() {
-  const membersData = generateTransactionData(25);
+  const [membersData, setMembersData] = useState<any>([
+    {
+      member: {
+        name: "Jane Doe",
+        image: "https://randomuser.me/api/portraits/women/21.jpg",
+      },
+      amount: "£500",
+      date: "Nov, 02 2023",
+      time: "12:00 PM",
+      status: "Not Settled",
+      category: "Partnership",
+      paymentMethod: "Cheque",
+    },
+  ]);
+  useEffect(() => {
+    setMembersData(generateTransactionData(25));
+  }, []);
   return (
     <div className="flex h-full max-h-[calc(100vh-12px)]">
       <Table

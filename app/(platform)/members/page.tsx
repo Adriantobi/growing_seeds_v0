@@ -1,6 +1,8 @@
+"use client";
 import { Table } from "@/components/table/table";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 function cuid() {
   const base = "0123456789abcdefghijklmnopqrstuvwxyz";
@@ -78,7 +80,21 @@ function generateMembersData(count: number) {
 }
 
 export default function Members() {
-  const membersData = generateMembersData(25);
+  const [members, setMembers] = useState([
+    {
+      member: {
+        name: "Jane Doe",
+        image: "https://randomuser.me/api/portrait/women/21.jpg",
+        id: "c1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t1u2v3w4x5y6z7",
+      },
+      createdDate: "Nov, 02 2023",
+      time: "12:00 PM",
+      memberId: "0001",
+    },
+  ]);
+  useEffect(() => {
+    setMembers(generateMembersData(10));
+  }, []);
   return (
     <div className="flex h-full max-h-[calc(100vh-12px)]">
       <Table
