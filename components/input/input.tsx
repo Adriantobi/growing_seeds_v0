@@ -1,0 +1,21 @@
+import React from "react";
+
+interface InputProps {
+  type: string;
+  placeholder?: string;
+  className?: string;
+}
+
+export default function Input({ type, placeholder, className }: InputProps) {
+  return (
+    <div
+      className={`rounded-lg border border-zinc-800 bg-zinc-800 bg-opacity-50 hover:bg-opacity-70 text-sm ${className}`}
+    >
+      <input
+        placeholder={placeholder}
+        className="bg-transparent outline-none px-4 py-2 w-full text-zinc-600 placeholder-zinc-600"
+        type={type}
+      />
+    </div>
+  );
+}
