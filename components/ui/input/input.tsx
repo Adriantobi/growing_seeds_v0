@@ -6,6 +6,7 @@ interface InputProps {
   className?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   name?: string;
+  required?: boolean;
 }
 
 export default function Input({
@@ -13,6 +14,7 @@ export default function Input({
   placeholder,
   className,
   name,
+  required,
   onChange,
 }: InputProps) {
   return (
@@ -24,6 +26,7 @@ export default function Input({
         className="bg-transparent outline-none px-4 py-2 w-full text-zinc-600 placeholder-zinc-600"
         type={type}
         name={name}
+        required={required}
         onChange={onChange}
       />
     </div>
