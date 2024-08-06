@@ -4,7 +4,7 @@ import { SmallButton } from "@/components/buttons/small-button";
 import { DetailTransaction } from "@/components/detail-transaction";
 import { Table } from "@/components/table/table";
 import Image from "next/image";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 export default function Dashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -125,15 +125,21 @@ export default function Dashboard() {
               member: (member) => (
                 <div className="flex gap-2 items-center">
                   <div className="w-6 aspect-square overflow-hidden rounded-full">
-                    <Image
-                      src={member?.image}
-                      width={0}
-                      height={0}
-                      alt={member.name}
-                      sizes="100vw"
-                      quality={100}
-                      className="object-cover w-full h-full"
-                    />
+                    <Suspense
+                      fallback={
+                        <div className="w-6 h-6 bg-zinc-800 rounded-full animate-pulse"></div>
+                      }
+                    >
+                      <Image
+                        src={member.image}
+                        width={0}
+                        height={0}
+                        alt={member.name}
+                        sizes="100vw"
+                        quality={100}
+                        className="object-cover w-full h-full"
+                      />
+                    </Suspense>
                   </div>
                   <span>{member.name}</span>
                 </div>
