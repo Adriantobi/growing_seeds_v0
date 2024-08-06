@@ -4,14 +4,18 @@ import { BigButton } from "./buttons/big-button";
 import Input from "./input/input";
 import { TriangleAlertIcon } from "lucide-react";
 import { signIn } from "next-auth/react";
-import { getChurches } from "@/lib/db";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { FetchBigOptions } from "./input/fetch-big-options";
+import { getChurches } from "@/lib/db";
 
 interface AuthFormProps {
   variant: "register" | "login";
+  options?: any[];
 }
-export async function AuthForm({ variant }: AuthFormProps) {
-  let error;
+export function AuthForm({ variant, options }: AuthFormProps) {
+  const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -28,30 +32,18 @@ export async function AuthForm({ variant }: AuthFormProps) {
       });
       const res = await response.json();
       if (res.status === 200) {
+        router.push("/dashboard");
       } else {
-        error = res.error;
+        setError(res.error);
       }
     } else {
-      // const response = await fetch("/api/auth/login", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({ email, password }),
-      // });
-      // const res = await response.json();
-      // if (res.status === 200) {
-      //   router.replace("dashboard");
-      // } else {
-      //   setError(res.error);
-      // }
       const response = await signIn("credentials", {
         email: data?.email,
         password: data?.password,
         redirect: true,
       });
       if (response?.error) {
-        error = "Invalid credentials";
+        setError("Invalid credentials");
       }
     }
   }
@@ -76,12 +68,13 @@ export async function AuthForm({ variant }: AuthFormProps) {
         {variant === "register" && (
           <div className="flex flex-col gap-2">
             <label className="text-muted-foreground text-sm" htmlFor="church">
-              Church
+              Select Church
             </label>
             <FetchBigOptions
-              fetchOptions={getChurches}
-              fallback={<div>text</div>}
-              placeholder="Church"
+              placeholder="Select Church"
+              name="church"
+              options={options!}
+              limit={10}
             />
           </div>
         )}

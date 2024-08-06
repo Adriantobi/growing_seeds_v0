@@ -61,7 +61,7 @@ export function SideModal({
               </BigButton>
               <BigButton
                 onClick={onClose}
-                className="bg-green-500 border border-green-500"
+                className="bg-green-500 hover:bg-green-700"
                 position="center"
               >
                 Save

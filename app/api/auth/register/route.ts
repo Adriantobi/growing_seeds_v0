@@ -1,4 +1,9 @@
-import { createUser, getUserByEmail } from "@/lib/db";
+import {
+  createUser,
+  getChurchId,
+  getUserByEmail,
+  isChurchValid,
+} from "@/lib/db";
 import { hashPassword } from "@/lib/password-utils";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -8,8 +13,8 @@ export async function POST(req: NextRequest) {
     return new Response("Invalid content type", { status: 415 });
   }
   const body = await req.json();
-  const { name, email, password, confirmPassword } = body;
-  if (!name || !email || !password) {
+  const { name, email, church, password, confirmPassword } = body;
+  if (!name || !email || !password || !confirmPassword || !church) {
     return NextResponse.json(
       { error: "All fields are required" },
       { status: 400 },
@@ -24,9 +29,14 @@ export async function POST(req: NextRequest) {
       { status: 400 },
     );
   }
+  if ((await isChurchValid(church)) === false) {
+    console.log("Invalid church");
+    return NextResponse.json({ error: "Invalid church" }, { status: 400 });
+  }
   const data = {
     name: name,
     email: email,
+    churchId: (await getChurchId(church)) || "0",
     password: hashPassword(password),
   };
 

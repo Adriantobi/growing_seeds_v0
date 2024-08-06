@@ -1,42 +1,44 @@
-import { useState, useEffect } from "react";
 import BigOption from "./big-option";
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 interface BigOptionProps {
   placeholder: string;
-  fallback: JSX.Element;
-  fetchOptions: (args?: any) => Promise<any>;
+  options: any[];
+  limit?: number;
+  name?: string;
 }
 
-export async function FetchBigOptions({
+export function FetchBigOptions({
   placeholder,
-  fallback,
-  fetchOptions,
+  options,
+  limit = 10,
+  name,
 }: BigOptionProps) {
-  const [options, setOptions] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [filteredOptions, setFilteredOptions] = useState(
+    options.slice(0, limit || 10),
+  );
 
   useEffect(() => {
-    async function optionsRefresh() {
-      try {
-        const data = await fetchOptions(searchTerm);
-        setOptions(data);
-      } catch (error) {
-        console.error("Failed to fetch options:", error);
-      }
+    if (searchTerm) {
+      setFilteredOptions(
+        options.filter((option) =>
+          option.toLowerCase().includes(searchTerm.toLowerCase()),
+        ),
+      );
+    } else {
+      setFilteredOptions(options);
     }
+  }, [searchTerm, options]);
 
-    optionsRefresh();
-  }, [searchTerm, fetchOptions]);
   return (
-    <Suspense fallback={fallback}>
-      <BigOption
-        placeholder={placeholder}
-        options={options}
-        allowTyping={true}
-        type="string"
-        onChange={setSearchTerm}
-      />
-    </Suspense>
+    <BigOption
+      placeholder={placeholder}
+      options={filteredOptions}
+      name={name}
+      allowTyping={true}
+      onChange={setSearchTerm}
+      type="string"
+    />
   );
 }

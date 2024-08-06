@@ -2,13 +2,15 @@ import Link from "next/link";
 
 import { AuthForm } from "../../../../components/auth-form";
 import Image from "next/image";
+import { getChurches } from "@/lib/db";
 
 export const metadata = {
   title: "Register",
   description: "Create an account to get started.",
 };
 
-export default function Register() {
+export default async function Register() {
+  const churches = await getChurches();
   return (
     <div className="container grid h-screen w-screen flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0 overflow-x-hidden no-scrollbar">
       <Link
@@ -36,7 +38,7 @@ export default function Register() {
               Enter your email below to create your account
             </p>
           </div>
-          <AuthForm variant="register" />
+          <AuthForm variant="register" options={churches} />
           <p className="px-8 text-center text-sm text-muted-foreground">
             By clicking register, you agree to our{" "}
             <Link

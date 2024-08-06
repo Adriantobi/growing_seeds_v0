@@ -4,13 +4,14 @@ export async function createUser(data: {
   name: string;
   email: string;
   password: string;
+  churchId: string;
 }) {
   return prisma.user.create({
     data: {
       name: data.name,
       email: data.email,
       password: data.password,
-      churchId: "clzhoeq1x000510se8rs7q9ns",
+      churchId: data.churchId,
       authProvider: "email",
     },
   });
@@ -26,7 +27,7 @@ export async function noPasswordUser(data: {
       name: data.name,
       email: data.email,
       authProvider: data.authProvider,
-      churchId: "clzhoeq1x000510se8rs7q9ns",
+      churchId: "0",
     },
   });
 }
@@ -39,7 +40,10 @@ export async function getUserByEmail(email: string) {
   });
 }
 
-export async function getChurches(search: string = "") {
+export async function getChurches(
+  search: string = "",
+  limit: number | string = "all",
+) {
   return prisma.church
     .findMany({
       where: {
@@ -48,6 +52,28 @@ export async function getChurches(search: string = "") {
           mode: "insensitive",
         },
       },
+      take: limit === "all" ? undefined : Number(limit),
     })
     .then((churches) => churches.map((church) => church.name));
+}
+
+export async function getChurchId(name: string) {
+  return prisma.church
+    .findFirst({
+      where: {
+        name: name,
+      },
+    })
+    .then((church) => church?.id)
+    .catch(() => null);
+}
+
+export async function isChurchValid(name: string) {
+  return prisma.church
+    .findFirst({
+      where: {
+        name: name,
+      },
+    })
+    .then((church) => church !== null);
 }
