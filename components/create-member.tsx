@@ -15,8 +15,23 @@ export function CreateMember({ isOpen, onClose }: CreateMemberProps) {
       onClose={onClose}
       header="Create Member"
       subheader="Add a new member to the system"
+      endPoint="/api/create/member"
     >
       <div className="flex flex-col h-full overflow-y-auto gap-3 no-scrollbar">
+        <div className="flex flex-col gap-2">
+          <label
+            className="text-muted-foreground text-sm mt-3"
+            htmlFor="memberId"
+          >
+            Member Id *
+          </label>
+          <Input
+            name="memberId"
+            type="text"
+            required={true}
+            placeholder="0004"
+          />
+        </div>
         <div className="flex flex-col gap-2">
           <label
             className="text-muted-foreground text-sm mt-3"
@@ -25,7 +40,7 @@ export function CreateMember({ isOpen, onClose }: CreateMemberProps) {
             First Name *
           </label>
           <Input
-            name="First Name"
+            name="firstName"
             type="text"
             required={true}
             placeholder="John"
@@ -35,81 +50,78 @@ export function CreateMember({ isOpen, onClose }: CreateMemberProps) {
           <label className="text-muted-foreground text-sm" htmlFor="lastName">
             Last Name
           </label>
-          <Input name="Last Name" type="text" placeholder="Doe" />
+          <Input name="lastName" type="text" placeholder="Doe" />
         </div>
         <div className="flex flex-col gap-2">
-          <label
-            className="text-muted-foreground text-sm"
-            htmlFor="DateOfBirth"
-          >
+          <label className="text-muted-foreground text-sm" htmlFor="birthDate">
             Date of Birth
           </label>
           <DatePicker
             required={true}
             minDate="01/01/1900"
             maxDate="01/01/2023"
-            name="Date of Birth"
+            name="birthDate"
             onChange={() => {}}
             position="bottom"
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-muted-foreground text-sm" htmlFor="Email">
+          <label className="text-muted-foreground text-sm" htmlFor="email">
             Email
           </label>
-          <Input name="Email" type="email" placeholder="abc@acme.com" />
+          <Input name="email" type="email" placeholder="abc@acme.com" />
         </div>
         <div className="flex flex-col gap-2">
           <label
             className="text-muted-foreground text-sm"
-            htmlFor="PhoneNumber"
+            htmlFor="phoneNumber"
           >
             Phone Number
           </label>
-          <Input name="Phone Number" type="tel" placeholder="08012345678" />
+          <Input name="phoneNumber" type="tel" placeholder="08012345678" />
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-muted-foreground text-sm" htmlFor="Address">
+          <label className="text-muted-foreground text-sm" htmlFor="address">
             Address
           </label>
-          <Input name="Address" type="text" placeholder="123, Main Street" />
+          <Input name="address" type="text" placeholder="123, Main Street" />
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-muted-foreground text-sm" htmlFor="Country">
+          <label className="text-muted-foreground text-sm" htmlFor="country">
             Country
           </label>
-          <Input name="Country" type="text" placeholder="Country" />
+          <Input name="country" type="text" placeholder="Country" />
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-muted-foreground text-sm" htmlFor="State">
+          <label className="text-muted-foreground text-sm" htmlFor="state">
             State
           </label>
-          <Input name="State" type="text" placeholder="State" />
+          <Input name="state" type="text" placeholder="State" />
         </div>
         <span className="grid grid-cols-3 gap-3">
           <div className="flex flex-col gap-2 col-span-2">
-            <label className="text-muted-foreground text-sm" htmlFor="City">
+            <label className="text-muted-foreground text-sm" htmlFor="city">
               City
             </label>
-            <Input name="City" type="text" placeholder="City" />
+            <Input name="city" type="text" placeholder="City" />
           </div>
 
           <div className="flex flex-col gap-2">
             <label
               className="text-muted-foreground text-sm"
-              htmlFor="PostalCode"
+              htmlFor="postalCode"
             >
               Postal Code
             </label>
-            <Input name="Postal Code" type="text" placeholder="12345" />
+            <Input name="postalCode" type="text" placeholder="12345" />
           </div>
         </span>
         <div className="flex flex-col gap-2">
-          <label className="text-muted-foreground text-sm" htmlFor="Department">
+          <label className="text-muted-foreground text-sm" htmlFor="department">
             Department
           </label>
           <Input
-            name="Department"
+            name="department"
             type="text"
             placeholder="Technical Support"
           />
@@ -117,11 +129,11 @@ export function CreateMember({ isOpen, onClose }: CreateMemberProps) {
         <div className="flex flex-col gap-2 mb-3">
           <label
             className="text-muted-foreground text-sm"
-            htmlFor="MaritalStatus"
+            htmlFor="maritalStatus"
           >
             Marital Status
           </label>
-          <Input name="Marital Status" type="text" placeholder="Single" />
+          <Input name="marital Status" type="text" placeholder="Single" />
         </div>{" "}
       </div>
     </SideModal>

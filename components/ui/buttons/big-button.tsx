@@ -4,6 +4,7 @@ interface BigButtonProps {
   position?: "center" | "left" | "right";
   className?: string;
   disabled?: boolean;
+  type?: "submit" | "reset" | "button" | undefined;
 }
 export function BigButton({
   onClick,
@@ -11,6 +12,7 @@ export function BigButton({
   className = "border border-zinc-800 bg-zinc-800",
   children,
   disabled,
+  type,
 }: BigButtonProps) {
   return (
     <button
@@ -23,6 +25,7 @@ export function BigButton({
             : "justify-end"
       } items-center cursor-pointer`}
       disabled={disabled}
+      type={type}
     >
       {children}
     </button>

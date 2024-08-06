@@ -49,9 +49,19 @@ model Church {
 
 model Member {
   id        String   @id @default(cuid())
+  memberId  String   @unique
   firstName String
-  lastName  String
-  memberId  String
+  lastName  String?
+  photo     String
+  birthDate DateTime?
+  email     String?
+  phone     String?
+  address   String?
+  country   String?
+  state    String?
+  city     String?
+  postalCode String?
+  department String?
   church    Church   @relation(fields: [churchId], references: [id])
   churchId  String
   entries   Entry[]

@@ -107,14 +107,34 @@ export async function createEntry(data: {
 export async function createMember(data: {
   firstName: string;
   lastName?: string;
+  photo?: string;
   churchId: string;
+  birthDate?: Date;
+  email?: string;
+  phone?: string;
+  address?: string;
+  country?: string;
+  state?: string;
+  city?: string;
+  postalCode?: string;
+  department?: string;
 }) {
   return prisma.member.create({
     data: {
       firstName: data.firstName,
-      lastName: data.lastName || "",
+      lastName: data.lastName || null,
+      photo: data.photo || null,
       churchId: data.churchId,
       memberId: Math.random().toString(36).substring(7),
+      birthDate: data.birthDate || null,
+      email: data.email || null,
+      phone: data.phone || null,
+      address: data.address || null,
+      country: data.country || null,
+      state: data.state || null,
+      city: data.city || null,
+      postalCode: data.postalCode || null,
+      department: data.department || null,
     },
   });
 }
