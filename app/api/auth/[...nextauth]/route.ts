@@ -8,6 +8,7 @@ import { getUserByEmail, noPasswordUser } from "@/lib/db";
 import { NextResponse } from "next/server";
 
 const authOptions: AuthOptions = {
+  secret: process.env.NEXTAUTH_SECRET!,
   session: {
     strategy: "jwt",
   },
