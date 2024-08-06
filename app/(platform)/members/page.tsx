@@ -85,7 +85,7 @@ export default function Members() {
   const [members, setMembers] = useState<any>([]);
   const [createMember, setCreateMember] = useState(false);
   useEffect(() => {
-    setMembers(generateMembersData(10));
+    setMembers(generateMembersData(100));
   }, []);
   return (
     <div className="flex flex-col h-full max-h-[calc(100vh-12px)]">
@@ -106,6 +106,12 @@ export default function Members() {
       <Table
         headers={["createdDate", "member", "memberId"]}
         data={members}
+        pagination={{
+          totalPages: 4,
+          onPageChange: (page) => console.log(page),
+          currentPage: 1,
+          totalRows: 100,
+        }}
         templates={{
           member: (member) => (
             <Link

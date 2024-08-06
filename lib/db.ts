@@ -148,3 +148,38 @@ export async function deleteMembers(memberIds: string[]) {
     },
   });
 }
+
+export async function getMembersWithPagination(
+  churchId: string,
+  search: string = "",
+  limit: number = 25,
+  offset: number = 0,
+) {
+  return prisma.member.findMany({
+    where: {
+      churchId: churchId,
+      OR: [
+        {
+          firstName: {
+            contains: search,
+            mode: "insensitive",
+          },
+        },
+        {
+          lastName: {
+            contains: search,
+            mode: "insensitive",
+          },
+        },
+        {
+          memberId: {
+            contains: search,
+            mode: "insensitive",
+          },
+        },
+      ],
+    },
+    take: limit,
+    skip: offset,
+  });
+}

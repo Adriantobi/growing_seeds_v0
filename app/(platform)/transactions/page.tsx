@@ -1,4 +1,6 @@
 "use client";
+import { CreateTransaction } from "@/components/create-transaction";
+import { SmallButton } from "@/components/ui/buttons/small-button";
 import { Table } from "@/components/ui/table/table";
 import Image from "next/image";
 import Link from "next/link";
@@ -102,11 +104,26 @@ function generateTransactionData(count: number) {
 
 export default function Transactions() {
   const [transactions, setTransactions] = useState<any>([]);
+  const [createTransaction, setCreateTransaction] = useState(false);
   useEffect(() => {
     setTransactions(generateTransactionData(25));
   }, []);
   return (
-    <div className="flex h-full max-h-[calc(100vh-12px)]">
+    <div className="flex flex-col h-full max-h-[calc(100vh-12px)]">
+      <div className="flex justify-between w-full sticky top-0 py-3 bg-[#121212]">
+        <span>Transaction</span>
+        <div className="flex gap-2 items-center">
+          <SmallButton onClick={() => setCreateTransaction(true)}>
+            Create Transaction
+          </SmallButton>
+          <SmallButton
+            className="bg-red-500 hover:bg-red-600 text-white"
+            onClick={() => setCreateTransaction(true)}
+          >
+            Delete All
+          </SmallButton>
+        </div>
+      </div>
       <Table
         headers={[
           "date",
@@ -161,6 +178,10 @@ export default function Transactions() {
             </span>
           ),
         }}
+      />
+      <CreateTransaction
+        isOpen={createTransaction}
+        onClose={() => setCreateTransaction(false)}
       />
     </div>
   );

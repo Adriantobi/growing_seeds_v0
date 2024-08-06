@@ -1,4 +1,4 @@
-import { pbkdf2Sync } from "node:crypto";
+import { pbkdf2Sync } from "crypto";
 
 const saltKey = process.env.SALT_KEY! || "salt-key";
 const iterations = 10000;
