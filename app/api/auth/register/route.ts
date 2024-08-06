@@ -1,0 +1,39 @@
+import { createUser } from "@/lib/db";
+import { hashPassword } from "@/lib/password-utils";
+import { NextRequest, NextResponse } from "next/server";
+
+export async function POST(req: NextRequest) {
+  const contentType = req.headers.get("content-type");
+  if (contentType !== "application/json") {
+    return new Response("Invalid content type", { status: 415 });
+  }
+  const body = await req.json();
+  const { name, email, password, confirmPassword } = body;
+  if (!name || !email || !password) {
+    return NextResponse.json(
+      { error: "All fields are required" },
+      { status: 400 },
+    );
+  }
+  if (password !== confirmPassword) {
+    return NextResponse.json(
+      { error: "Passwords do not match" },
+      { status: 400 },
+    );
+  }
+  const data = {
+    name: name,
+    email: email,
+    password: hashPassword(password),
+  };
+
+  try {
+    const user = await createUser(data);
+    return NextResponse.json(
+      { message: "User successfully created" },
+      { status: 200 },
+    );
+  } catch (error) {
+    return NextResponse.json({ error: error }, { status: 500 });
+  }
+}

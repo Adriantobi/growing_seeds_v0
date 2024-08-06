@@ -38,7 +38,7 @@ export default function Register() {
           </div>
           <AuthForm variant="register" />
           <p className="px-8 text-center text-sm text-muted-foreground">
-            By clicking continue, you agree to our{" "}
+            By clicking register, you agree to our{" "}
             <Link
               href="#tos"
               className="hover:text-brand underline underline-offset-4"

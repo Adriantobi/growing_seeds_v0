@@ -2,56 +2,113 @@
 import { Google } from "iconic-react";
 import { BigButton } from "./buttons/big-button";
 import Input from "./input/input";
-import { Github } from "lucide-react";
+import { Github, TriangleAlertIcon } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface AuthFormProps {
   variant: "register" | "login";
 }
 export function AuthForm({ variant }: AuthFormProps) {
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState<any>();
+  const router = useRouter();
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    console.log();
+    if (variant === "register") {
+      if (password !== confirmPassword) {
+        setError("Passwords do not match");
+        return;
+      }
+    }
+    if (variant === "register") {
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, password, confirmPassword }),
+      });
+      const res = await response.json();
+      if (res.status === 200) {
+        router.push("/dashboard");
+      } else {
+        setError(res.error);
+      }
+    } else {
+      // const response = await fetch("/api/auth/login", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({ email, password }),
+      // });
+      // const res = await response.json();
+      // if (res.status === 200) {
+      //   router.replace("dashboard");
+      // } else {
+      //   setError(res.error);
+      // }
+      const response = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
+      if (!response?.error) {
+        router.push("/dashboard");
+      } else {
+        setError("Invalid credentials");
+      }
+    }
+  }
+
   return (
     <div className="flex flex-col gap-4">
-      <form className="flex flex-col gap-4">
-        {variant === "login" && (
-          <div className="flex flex-col gap-2">
-            <label className="text-muted-foreground text-sm" htmlFor="email">
-              Email
-            </label>
-            <Input type="email" placeholder="Email" />
-          </div>
-        )}
-        {variant === "login" && (
-          <div className="flex flex-col gap-2">
-            <label className="text-muted-foreground text-sm" htmlFor="password">
-              Password
-            </label>
-            <Input type="password" placeholder="Password" />
-          </div>
-        )}
-        {variant === "register" && (
-          <div className="flex flex-col gap-2">
-            <label className="text-muted-foreground text-sm" htmlFor="email">
-              Email
-            </label>
-            <Input type="email" placeholder="Email" />
-          </div>
-        )}
+      <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+        <div className="flex flex-col gap-2">
+          <label className="text-muted-foreground text-sm" htmlFor="email">
+            Email
+          </label>
+          <Input
+            type="email"
+            placeholder="Email"
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
+        </div>
         {variant === "register" && (
           <div className="flex flex-col gap-2">
             <label className="text-muted-foreground text-sm" htmlFor="name">
               Name
             </label>
-            <Input type="text" placeholder="Name" />
+            <Input
+              type="text"
+              placeholder="Name"
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+            />
           </div>
         )}
-        {variant === "register" && (
-          <div className="flex flex-col gap-2">
-            <label className="text-muted-foreground text-sm" htmlFor="password">
-              Password
-            </label>
-            <Input type="password" placeholder="Password" />
-          </div>
-        )}
+        <div className="flex flex-col gap-2">
+          <label className="text-muted-foreground text-sm" htmlFor="password">
+            Password
+          </label>
+          <Input
+            type="password"
+            placeholder="Password"
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
+        </div>
         {variant === "register" && (
           <div className="flex flex-col gap-2">
             <label
@@ -60,7 +117,23 @@ export function AuthForm({ variant }: AuthFormProps) {
             >
               Confirm Password
             </label>
-            <Input type="password" placeholder="Password" />
+            <Input
+              type="password"
+              placeholder="Password"
+              onChange={(e) => {
+                setConfirmPassword(e.target.value);
+              }}
+            />
+          </div>
+        )}
+        {error && (
+          <div className="flex gap-4 border border-red-400 text-red-400 bg-red-600 bg-opacity-15 text-sm rounded-lg items-center px-4 py-2">
+            <TriangleAlertIcon
+              size={20}
+              strokeWidth={1.5}
+              className="stroke-red-400"
+            />
+            {error}
           </div>
         )}
         <BigButton className="bg-green-500 hover:bg-green-700">

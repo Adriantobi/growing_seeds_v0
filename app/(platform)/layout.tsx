@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
 import { SideBar } from "@/components/side-bar";
+import { NextAuthProvider } from "../Providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,10 +19,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="flex gap-8">
-          <SideBar />
-          <span className="mt-3 pr-8 w-full">{children}</span>
-        </div>
+        <NextAuthProvider>
+          <div className="flex gap-8">
+            <SideBar />
+            <span className="mt-3 pr-8 w-full">{children}</span>
+          </div>
+        </NextAuthProvider>
       </body>
     </html>
   );

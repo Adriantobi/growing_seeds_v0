@@ -101,22 +101,9 @@ function generateTransactionData(count: number) {
 }
 
 export default function Transactions() {
-  const [membersData, setMembersData] = useState<any>([
-    {
-      member: {
-        name: "Jane Doe",
-        image: "https://randomuser.me/api/portraits/women/21.jpg",
-      },
-      amount: "£500",
-      date: "Nov, 02 2023",
-      time: "12:00 PM",
-      status: "Not Settled",
-      category: "Partnership",
-      paymentMethod: "Cheque",
-    },
-  ]);
+  const [transactions, setTransactions] = useState<any>([]);
   useEffect(() => {
-    setMembersData(generateTransactionData(25));
+    setTransactions(generateTransactionData(25));
   }, []);
   return (
     <div className="flex h-full max-h-[calc(100vh-12px)]">
@@ -129,7 +116,7 @@ export default function Transactions() {
           "category",
           "paymentMethod",
         ]}
-        data={membersData}
+        data={transactions}
         templates={{
           member: (member) => (
             <Link
