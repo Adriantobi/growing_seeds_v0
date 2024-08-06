@@ -5,12 +5,14 @@ interface InputProps {
   placeholder?: string;
   className?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  name?: string;
 }
 
 export default function Input({
   type,
   placeholder,
   className,
+  name,
   onChange,
 }: InputProps) {
   return (
@@ -21,6 +23,7 @@ export default function Input({
         placeholder={placeholder}
         className="bg-transparent outline-none px-4 py-2 w-full text-zinc-600 placeholder-zinc-600"
         type={type}
+        name={name}
         onChange={onChange}
       />
     </div>

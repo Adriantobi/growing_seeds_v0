@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description: "Login to your account",
 };
 
-export default function Login() {
+export default async function Login() {
   return (
     <div
       style={{

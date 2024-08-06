@@ -38,3 +38,16 @@ export async function getUserByEmail(email: string) {
     },
   });
 }
+
+export async function getChurches(search: string = "") {
+  return prisma.church
+    .findMany({
+      where: {
+        name: {
+          contains: search,
+          mode: "insensitive",
+        },
+      },
+    })
+    .then((churches) => churches.map((church) => church.name));
+}

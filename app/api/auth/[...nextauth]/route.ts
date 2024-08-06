@@ -5,6 +5,7 @@ import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { comparePassword } from "@/lib/password-utils";
 import { getUserByEmail, noPasswordUser } from "@/lib/db";
+import { NextResponse } from "next/server";
 
 const authOptions: AuthOptions = {
   session: {
@@ -64,7 +65,7 @@ const authOptions: AuthOptions = {
       }
       return true;
     },
-    async redirect({ url, baseUrl }) {
+    async redirect({ baseUrl }) {
       return baseUrl + "/dashboard";
     },
   },
