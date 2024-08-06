@@ -52,7 +52,7 @@ model Member {
   memberId  String   @unique
   firstName String
   lastName  String?
-  photo     String
+  photo     String?
   birthDate DateTime?
   email     String?
   phone     String?

@@ -38,9 +38,19 @@ CREATE TABLE "Church" (
 -- CreateTable
 CREATE TABLE "Member" (
     "id" TEXT NOT NULL,
-    "firstName" TEXT NOT NULL,
-    "lastName" TEXT NOT NULL,
     "memberId" TEXT NOT NULL,
+    "firstName" TEXT NOT NULL,
+    "lastName" TEXT,
+    "photo" TEXT,
+    "birthDate" TIMESTAMP(3),
+    "email" TEXT,
+    "phone" TEXT,
+    "address" TEXT,
+    "country" TEXT,
+    "state" TEXT,
+    "city" TEXT,
+    "postalCode" TEXT,
+    "department" TEXT,
     "churchId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -68,6 +78,9 @@ CREATE TABLE "Entry" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Member_memberId_key" ON "Member"("memberId");
 
 -- AddForeignKey
 ALTER TABLE "User" ADD CONSTRAINT "User_churchId_fkey" FOREIGN KEY ("churchId") REFERENCES "Church"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

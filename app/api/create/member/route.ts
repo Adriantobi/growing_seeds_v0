@@ -39,7 +39,7 @@ export async function POST(req: Request, res: Response) {
     lastName: lastName || null,
     photo: photo || null,
     memberId,
-    churchId: "0",
+    churchId: "clziqkjpt00019o24f799nodp",
     birthDate: birthDate || null,
     email: email || null,
     phone: phone || null,
@@ -51,7 +51,8 @@ export async function POST(req: Request, res: Response) {
     department: department || null,
   };
   try {
-    await createMember(data);
+    console.log(data);
+    const newMember = await createMember(data);
     return NextResponse.json(
       { message: "Member successfully created" },
       { status: 200 },
