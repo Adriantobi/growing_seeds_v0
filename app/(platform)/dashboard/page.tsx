@@ -130,15 +130,17 @@ export default function Dashboard() {
                         <div className="w-6 h-6 bg-zinc-800 rounded-full animate-pulse"></div>
                       }
                     >
-                      <Image
-                        src={member.image}
-                        width={0}
-                        height={0}
-                        alt={member.name}
-                        sizes="100vw"
-                        quality={100}
-                        className="object-cover w-full h-full"
-                      />
+                      {member && member.image && (
+                        <Image
+                          src={member.image}
+                          width={0}
+                          height={0}
+                          alt={member.name}
+                          sizes="100vw"
+                          quality={100}
+                          className="object-cover w-full h-full"
+                        />
+                      )}
                     </Suspense>
                   </div>
                   <span>{member.name}</span>
