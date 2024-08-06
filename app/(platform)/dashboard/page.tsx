@@ -126,7 +126,7 @@ export default function Dashboard() {
                 <div className="flex gap-2 items-center">
                   <div className="w-6 aspect-square overflow-hidden rounded-full">
                     <Image
-                      src={member.image}
+                      src={member?.image}
                       width={0}
                       height={0}
                       alt={member.name}
