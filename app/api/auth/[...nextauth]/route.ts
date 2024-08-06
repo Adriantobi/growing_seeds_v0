@@ -36,7 +36,10 @@ const authOptions: AuthOptions = {
           if (!user) {
             return null;
           }
-          if (comparePassword(password, user.password)) {
+          if (
+            user.authProvider === "email" &&
+            comparePassword(password, user?.password! || "")
+          ) {
             return user;
           } else {
             return null;
@@ -55,11 +58,14 @@ const authOptions: AuthOptions = {
         const data = {
           name: user.name!,
           email: user.email!,
-          authProvider: account?.provider! && "oauth",
+          authProvider: (account?.provider! as string) || "oauth",
         };
         await noPasswordUser(data);
       }
       return true;
+    },
+    async redirect({ url, baseUrl }) {
+      return baseUrl + "/dashboard";
     },
   },
 };

@@ -58,11 +58,9 @@ export function AuthForm({ variant }: AuthFormProps) {
       const response = await signIn("credentials", {
         email,
         password,
-        redirect: false,
+        redirect: true,
       });
-      if (!response?.error) {
-        router.push("/dashboard");
-      } else {
+      if (response?.error) {
         setError("Invalid credentials");
       }
     }

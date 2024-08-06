@@ -1,4 +1,4 @@
-import { createUser } from "@/lib/db";
+import { createUser, getUserByEmail } from "@/lib/db";
 import { hashPassword } from "@/lib/password-utils";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -14,6 +14,9 @@ export async function POST(req: NextRequest) {
       { error: "All fields are required" },
       { status: 400 },
     );
+  }
+  if (await getUserByEmail(email)) {
+    return NextResponse.json({ error: "User already exists" }, { status: 400 });
   }
   if (password !== confirmPassword) {
     return NextResponse.json(

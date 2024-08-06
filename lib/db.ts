@@ -10,7 +10,7 @@ export async function createUser(data: {
       name: data.name,
       email: data.email,
       password: data.password,
-      churchId: "clzh8pjzy000110sedesklplj",
+      churchId: "clzhoeq1x000510se8rs7q9ns",
       authProvider: "email",
     },
   });
@@ -26,7 +26,7 @@ export async function noPasswordUser(data: {
       name: data.name,
       email: data.email,
       authProvider: data.authProvider,
-      churchId: "clzh8pjzy000110sedesklplj",
+      churchId: "clzhoeq1x000510se8rs7q9ns",
     },
   });
 }
