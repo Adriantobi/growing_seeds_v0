@@ -142,7 +142,7 @@ export default function Transactions() {
                   )}
                 </Suspense>
               </div>
-              <span>{member.name}</span>
+              <span>{member.name || ""}</span>
             </Link>
           ),
           date: (date, time) => (

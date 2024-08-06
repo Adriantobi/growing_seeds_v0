@@ -143,7 +143,7 @@ export default function Dashboard() {
                       )}
                     </Suspense>
                   </div>
-                  <span>{member.name}</span>
+                  <span>{member.name || ""}</span>
                 </div>
               ),
               date: (date, time) => (

@@ -114,7 +114,7 @@ export default function Members() {
                   )}
                 </Suspense>
               </div>
-              <span>{member.name}</span>
+              <span>{member.name || ""}</span>
             </Link>
           ),
           createdDate: (createdDate, time) => (
