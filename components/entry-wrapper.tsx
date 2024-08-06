@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
-import Input from "./input/input";
-import OptionInput from "./input/option-input";
+import { useState } from "react";
 import { PlusIcon } from "lucide-react";
-import { BigButton } from "./buttons/big-button";
+import OptionInput from "./ui/input/option-input";
+import Input from "./ui/input/input";
+import { BigButton } from "./ui/buttons/big-button";
 
 interface OptionProps {
   title: string;

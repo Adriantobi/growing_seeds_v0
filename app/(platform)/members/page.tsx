@@ -1,5 +1,6 @@
 "use client";
-import { Table } from "@/components/table/table";
+import { SmallButton } from "@/components/ui/buttons/small-button";
+import { Table } from "@/components/ui/table/table";
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
@@ -81,11 +82,26 @@ function generateMembersData(count: number) {
 
 export default function Members() {
   const [members, setMembers] = useState<any>([]);
+  const [createMember, setCreateMember] = useState(false);
   useEffect(() => {
-    setMembers(generateMembersData(25));
+    setMembers(generateMembersData(10));
   }, []);
   return (
-    <div className="flex h-full max-h-[calc(100vh-12px)]">
+    <div className="flex flex-col h-full max-h-[calc(100vh-12px)]">
+      <div className="flex justify-between w-full sticky top-0 py-3 bg-[#121212]">
+        <span>Members</span>
+        <div className="flex gap-2 items-center">
+          <SmallButton onClick={() => setMembers(true)}>
+            Create Member
+          </SmallButton>
+          <SmallButton
+            className="bg-red-500 hover:bg-red-600 text-white"
+            onClick={() => setMembers(true)}
+          >
+            Delete All
+          </SmallButton>
+        </div>
+      </div>
       <Table
         headers={["createdDate", "member", "memberId"]}
         data={members}

@@ -77,3 +77,54 @@ export async function isChurchValid(name: string) {
     })
     .then((church) => church !== null);
 }
+
+export async function createEntry(data: {
+  memberId: string;
+  churchId: string;
+  category: string;
+  date: string;
+  amount: number;
+  paymentMethod: string;
+  reference?: string;
+  chequeNumber?: string;
+  cashDenominations?: { denomination: number; quantity: number }[];
+}) {
+  return prisma.entry.create({
+    data: {
+      memberId: data.memberId,
+      churchId: data.churchId,
+      date: data.date,
+      amount: data.amount,
+      category: data.category,
+      paymentMethod: data.paymentMethod,
+      reference: data.reference || "",
+      cashDenominations: data.cashDenominations || [],
+      chequeNumber: data.chequeNumber || "",
+    },
+  });
+}
+
+export async function createMember(data: {
+  firstName: string;
+  lastName?: string;
+  churchId: string;
+}) {
+  return prisma.member.create({
+    data: {
+      firstName: data.firstName,
+      lastName: data.lastName || "",
+      churchId: data.churchId,
+      memberId: Math.random().toString(36).substring(7),
+    },
+  });
+}
+
+export async function deleteMembers(memberIds: string[]) {
+  return prisma.member.deleteMany({
+    where: {
+      memberId: {
+        in: memberIds,
+      },
+    },
+  });
+}

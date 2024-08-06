@@ -1,5 +1,5 @@
 "use client";
-import { Table } from "@/components/table/table";
+import { Table } from "@/components/ui/table/table";
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";

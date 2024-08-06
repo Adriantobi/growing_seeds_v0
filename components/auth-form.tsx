@@ -1,12 +1,12 @@
 "use client";
 import { Google } from "iconic-react";
-import { BigButton } from "./buttons/big-button";
-import Input from "./input/input";
+import { BigButton } from "./ui/table/buttons/big-button";
+import Input from "./ui/table/input/input";
 import { TriangleAlertIcon } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { FetchBigOptions } from "./input/fetch-big-options";
+import { FetchBigOptions } from "./ui/table/input/fetch-big-options";
 import { getChurches } from "@/lib/db";
 
 interface AuthFormProps {

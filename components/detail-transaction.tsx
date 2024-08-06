@@ -1,7 +1,5 @@
-import { BigButton } from "./buttons/big-button";
 import EntryWrapper from "./entry-wrapper";
-import OptionInput from "./input/option-input";
-import { SideModal } from "./modals/side-modal";
+import { SideModal } from "./ui/modals/side-modal";
 
 interface DetailTransactionProps {
   isOpen: boolean;

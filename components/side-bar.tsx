@@ -9,9 +9,9 @@ import {
 } from "iconic-react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { NavButton } from "./buttons/nav-button";
 import Image from "next/image";
 import { ChevronsUpDownIcon } from "lucide-react";
+import { NavButton } from "./ui/buttons/nav-button";
 
 export function SideBar() {
   const [currentPage, setCurrentPage] = useState("dashboard");

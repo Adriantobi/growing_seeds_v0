@@ -66,6 +66,8 @@ model Entry {
   amount    Float
   paymentMethod String
   cashDenominations Json?
+  chequeNumber String?
+  reference String?
   memberId  String
   member    Member   @relation(fields: [memberId], references: [id])
   church    Church   @relation(fields: [churchId], references: [id])

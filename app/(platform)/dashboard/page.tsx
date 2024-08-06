@@ -1,8 +1,8 @@
 "use client";
 
-import { SmallButton } from "@/components/buttons/small-button";
 import { DetailTransaction } from "@/components/detail-transaction";
-import { Table } from "@/components/table/table";
+import { SmallButton } from "@/components/ui/buttons/small-button";
+import { Table } from "@/components/ui/table/table";
 import Image from "next/image";
 import { Suspense, useState } from "react";
 
