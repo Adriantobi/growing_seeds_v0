@@ -1,40 +1,48 @@
-import NextAuth from "next-auth";
-import authConfig from "@/auth.config";
+import { getToken } from "next-auth/jwt";
+import { withAuth } from "next-auth/middleware";
 import {
   DEFAULT_LOGIN_REDIRECT,
   apiAuthPrefix,
   publicRoutes,
   authRoutes,
 } from "./routes";
+import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
 
-const { auth } = NextAuth(authConfig);
-
-export default auth((req: any) => {
-  const { nextUrl } = req;
-  const isLoggedIn = !!req.auth;
-  const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
-  const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
-  const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+export default async function middleware(
+  req: NextRequest,
+  event: NextFetchEvent,
+) {
+  const token = await getToken({ req });
+  const isAuthenticated = !!token;
+  const isApiAuthRoute = req.nextUrl.pathname.startsWith(apiAuthPrefix);
+  const isPublicRoute = publicRoutes.includes(req.nextUrl.pathname);
+  const isAuthRoute = authRoutes.includes(req.nextUrl.pathname);
 
   if (isApiAuthRoute) {
     return null;
   }
 
   if (isAuthRoute) {
-    if (isLoggedIn) {
-      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+    if (isAuthenticated) {
+      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, req.nextUrl));
     }
     return null;
   }
 
-  if (!isLoggedIn && !isPublicRoute) {
-    return Response.redirect(new URL("/auth/login", nextUrl));
+  if (!isAuthenticated && !isPublicRoute) {
+    return Response.redirect(new URL("/auth/login", req.nextUrl));
   }
 
-  return null;
-});
+  const authMiddleware = withAuth({
+    pages: {
+      signIn: req.nextUrl.pathname,
+    },
+  });
 
-// Optionally, don't invoke Middleware on some paths
+  // @ts-expect-error
+  return authMiddleware(req, event);
+}
+
 export const config = {
   matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
 };
