@@ -132,10 +132,10 @@ export default function Dashboard() {
                     >
                       {member && member.image && (
                         <Image
-                          src={member.image}
+                          src={member?.image!}
                           width={0}
                           height={0}
-                          alt={member.name}
+                          alt={member?.name!}
                           sizes="100vw"
                           quality={100}
                           className="object-cover w-full h-full"
@@ -143,7 +143,7 @@ export default function Dashboard() {
                       )}
                     </Suspense>
                   </div>
-                  <span>{member.name || ""}</span>
+                  <span>{member?.name! || ""}</span>
                 </div>
               ),
               date: (date, time) => (
