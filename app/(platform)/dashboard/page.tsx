@@ -130,7 +130,7 @@ export default function Dashboard() {
                         <div className="w-6 h-6 bg-zinc-800 rounded-full animate-pulse"></div>
                       }
                     >
-                      {member && member.image && (
+                      {member && member?.image! && (
                         <Image
                           src={member?.image!}
                           width={0}

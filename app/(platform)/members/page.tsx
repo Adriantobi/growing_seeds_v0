@@ -109,7 +109,7 @@ export default function Members() {
         templates={{
           member: (member) => (
             <Link
-              href={`/member/${member.id}`}
+              href={`/member/${member?.id || "0"}`}
               className="flex gap-2 items-center"
             >
               <div className="w-6 aspect-square overflow-hidden rounded-full">
@@ -118,12 +118,12 @@ export default function Members() {
                     <div className="w-6 h-6 bg-zinc-800 rounded-full animate-pulse"></div>
                   }
                 >
-                  {member && member.image && (
+                  {member && member?.image! && (
                     <Image
-                      src={member.image}
+                      src={member?.image!}
                       width={0}
                       height={0}
-                      alt={member.name}
+                      alt={member?.name!}
                       sizes="100vw"
                       quality={100}
                       className="object-cover w-full h-full"
@@ -131,7 +131,7 @@ export default function Members() {
                   )}
                 </Suspense>
               </div>
-              <span>{member.name || ""}</span>
+              <span>{member?.name! || ""}</span>
             </Link>
           ),
           createdDate: (createdDate, time) => (
