@@ -1,4 +1,4 @@
-import { getUserByEmail } from "@/lib/db";
+import { getUserByEmail } from "@/lib/queries";
 import { comparePassword } from "@/lib/password-utils";
 import { NextRequest, NextResponse } from "next/server";
 

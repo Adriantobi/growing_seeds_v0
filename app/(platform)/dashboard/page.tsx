@@ -3,11 +3,12 @@
 import { DetailTransaction } from "@/components/detail-transaction";
 import { SmallButton } from "@/components/ui/buttons/small-button";
 import { Table } from "@/components/ui/table/table";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { Suspense, useState } from "react";
 
 export default function Dashboard() {
+  const { data } = useSession();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const currentDate = new Date().toLocaleDateString("en-US", {
     weekday: "long",
@@ -19,7 +20,7 @@ export default function Dashboard() {
     <div className="flex flex-col gap-3">
       <div className="flex justify-between w-full sticky top-0 py-3 bg-[#121212]">
         <span>
-          Hey, Adrian!
+          Hey, {data?.user?.name}!
           <p className="text-sm text-zinc-500">{currentDate}</p>
         </span>
         <div className="flex gap-2 items-center">

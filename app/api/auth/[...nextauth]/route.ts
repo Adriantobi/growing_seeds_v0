@@ -1,9 +1,13 @@
 import { AuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
-import { getUserByEmail, noPasswordUser, updateUserAuthToken } from "@/lib/db";
+import {
+  getUserByEmail,
+  noPasswordUser,
+  updateUserAuthToken,
+} from "@/lib/queries";
 import authConfig from "@/auth.config";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import prisma from "@/lib/prisma";
+import prisma from "@/lib/db";
 
 const authOptions: AuthOptions = {
   pages: {

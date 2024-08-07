@@ -3,7 +3,7 @@ import {
   getChurchId,
   getUserByEmail,
   isChurchValid,
-} from "@/lib/db";
+} from "@/lib/queries";
 import { hashPassword } from "@/lib/password-utils";
 import { NextRequest, NextResponse } from "next/server";
 

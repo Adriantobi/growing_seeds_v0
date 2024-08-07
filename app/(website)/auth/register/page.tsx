@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { AuthForm } from "../../../../components/auth-form";
 import Image from "next/image";
-import { getChurches } from "@/lib/db";
+import { getChurches } from "@/lib/queries";
 
 export const metadata = {
   title: "Register",

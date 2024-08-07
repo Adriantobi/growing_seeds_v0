@@ -1,4 +1,4 @@
-import { createMember } from "@/lib/db";
+import { createMember } from "@/lib/queries";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request, res: Response) {
