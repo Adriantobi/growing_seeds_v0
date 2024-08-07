@@ -39,17 +39,18 @@ export function SideModal({
     if (!endPoint) {
       return;
     }
-    const csrfToken = await getCsrfToken();
-    const response = await fetch(endPoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${csrfToken}`,
-      },
-      body: JSON.stringify(data),
+    const response = await getCsrfToken().then((token) => {
+      return fetch(endPoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${token}`,
+        },
+        body: JSON.stringify(data),
+      });
     });
     const res = await response.json();
-    if (res.status === 200) {
+    if (response.ok) {
       onClose();
     } else {
       console.error(res.error);

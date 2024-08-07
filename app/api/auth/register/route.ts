@@ -30,7 +30,6 @@ export async function POST(req: NextRequest) {
     );
   }
   if ((await isChurchValid(church)) === false) {
-    console.log("Invalid church");
     return NextResponse.json({ error: "Invalid church" }, { status: 400 });
   }
   const data = {

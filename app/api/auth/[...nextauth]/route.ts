@@ -19,7 +19,7 @@ const authOptions: AuthOptions = {
     strategy: "jwt",
   },
   callbacks: {
-    async signIn({ user, account }) {
+    async signIn({ user, account, credentials }) {
       const existingUser = await getUserByEmail(user.email!);
 
       if (!existingUser) {
@@ -29,20 +29,11 @@ const authOptions: AuthOptions = {
           authProvider: (account?.provider! as string) || "oauth",
         };
         await noPasswordUser(data);
+      } else {
+        const token = credentials?.csrfToken;
+        if (token) updateUserAuthToken(user.id!, token as string);
       }
       return true;
-    },
-
-    async jwt(params) {
-      const { token, user } = params;
-      if (user) {
-        const existingUser = await getUserByEmail(user.email!);
-
-        if (existingUser) {
-          await updateUserAuthToken(existingUser.id, "cool beens");
-        }
-      }
-      return token;
     },
   },
   adapter: PrismaAdapter(prisma),

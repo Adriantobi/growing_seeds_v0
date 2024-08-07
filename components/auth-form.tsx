@@ -30,8 +30,12 @@ export function AuthForm({ variant, options }: AuthFormProps) {
         body: JSON.stringify(data),
       });
       const res = await response.json();
-      if (res.status === 200) {
-        router.push("/dashboard");
+      if (response.ok) {
+        await signIn("credentials", {
+          email: data?.email,
+          password: data?.password,
+          redirect: true,
+        });
       } else {
         setError(res.error);
       }

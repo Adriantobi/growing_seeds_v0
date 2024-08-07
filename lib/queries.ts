@@ -206,3 +206,12 @@ export async function getChurchByUserId(id: string) {
     },
   });
 }
+
+export async function checkAuthValidity(email: string, token: string) {
+  return prisma.user.findUniqueOrThrow({
+    where: {
+      email: email,
+      authToken: token,
+    },
+  });
+}

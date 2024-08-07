@@ -132,7 +132,7 @@ export function CreateMember({ isOpen, onClose }: CreateMemberProps) {
           >
             Marital Status
           </label>
-          <Input name="marital Status" type="text" placeholder="Single" />
+          <Input name="maritalStatus" type="text" placeholder="Single" />
         </div>{" "}
       </div>
     </SideModal>
