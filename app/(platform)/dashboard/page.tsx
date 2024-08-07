@@ -32,12 +32,6 @@ export default function Dashboard() {
           >
             Add payment
           </SmallButton>
-          <SmallButton
-            className="bg-red-500 hover:bg-red-600 text-white"
-            onClick={() => signOut()}
-          >
-            Logout
-          </SmallButton>
         </div>
       </div>
       <div className="grid grid-cols-3 gap-4 mb-4">

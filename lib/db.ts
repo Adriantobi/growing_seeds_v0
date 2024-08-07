@@ -107,7 +107,7 @@ export async function createEntry(data: {
 export async function createMember(data: {
   firstName: string;
   lastName?: string;
-  photo?: string;
+  image?: string;
   churchId: string;
   birthDate?: Date;
   email?: string;
@@ -123,7 +123,7 @@ export async function createMember(data: {
     data: {
       firstName: data.firstName,
       lastName: data.lastName || null,
-      photo: data.photo || null,
+      image: data.image || null,
       churchId: data.churchId,
       memberId: Math.random().toString(36).substring(7),
       birthDate: data.birthDate || null,

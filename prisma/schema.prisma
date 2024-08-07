@@ -17,6 +17,7 @@ model User {
   id        String   @id @default(cuid())
   email     String   @unique
   name      String
+  image     String?
   password  String?
   authProvider String
   authToken String?
@@ -53,7 +54,7 @@ model Member {
   memberId  String   @unique
   firstName String
   lastName  String?
-  photo     String?
+  image     String?
   birthDate DateTime?
   email     String?
   phone     String?

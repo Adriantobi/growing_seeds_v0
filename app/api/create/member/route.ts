@@ -14,7 +14,7 @@ export async function POST(req: Request, res: Response) {
   const {
     firstName,
     lastName,
-    photo,
+    image,
     memberId,
     birthDate,
     email,
@@ -37,7 +37,7 @@ export async function POST(req: Request, res: Response) {
   const data = {
     firstName,
     lastName: lastName || null,
-    photo: photo || null,
+    image: image || null,
     memberId,
     churchId: "clziqkjpt00019o24f799nodp",
     birthDate: birthDate || null,
