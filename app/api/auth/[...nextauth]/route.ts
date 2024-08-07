@@ -1,6 +1,6 @@
 import { AuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
-import { getUserByEmail, noPasswordUser } from "@/lib/db";
+import { getUserByEmail, noPasswordUser, updateUserAuthToken } from "@/lib/db";
 import authConfig from "@/auth.config";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@/lib/prisma";
@@ -27,6 +27,21 @@ const authOptions: AuthOptions = {
         await noPasswordUser(data);
       }
       return true;
+    },
+
+    async jwt(params) {
+      const { token, user } = params;
+      if (user) {
+        const existingUser = await getUserByEmail(user.email!);
+
+        if (existingUser) {
+          await updateUserAuthToken(
+            existingUser.id,
+            token.accessToken! as string,
+          );
+        }
+      }
+      return token;
     },
   },
   adapter: PrismaAdapter(prisma),

@@ -19,6 +19,7 @@ model User {
   name      String
   password  String?
   authProvider String
+  authToken String?
   churchId  String
   church    Church   @relation(fields: [churchId], references: [id])
   createdAt DateTime @default(now())

@@ -183,3 +183,14 @@ export async function getMembersWithPagination(
     skip: offset,
   });
 }
+
+export async function updateUserAuthToken(id: string, token: string) {
+  return prisma.user.update({
+    where: {
+      id: id,
+    },
+    data: {
+      authToken: token,
+    },
+  });
+}

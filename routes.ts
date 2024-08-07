@@ -17,11 +17,20 @@ export const authRoutes = ["/auth/login", "/auth/register"];
  * Routes that start with this prefix are used for API authentication purposes
  * @type {string}
  */
-export const apiAuthPrefix = "/api";
+export const apiPrefix = "/api";
+
+/**
+ * The prefix for API authentication routes
+ * Routes that start with this prefix are used for API authentication purposes
+ * @type {string}
+ */
+export const apiAuthPrefix = `${apiPrefix}/auth`;
 
 /**
  * The default redirect path after logging in
  * @type {string}
  */
 export const DEFAULT_LOGIN_REDIRECT = "/dashboard";
+export const SESSION_PATH = "/api/auth/session";
 export const LOGIN_PATH = "/auth/login";
+export const ERROR_PATH = "/auth/error";

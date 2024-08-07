@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { MouseEvent, useEffect, useRef } from "react";
 import { XIcon } from "lucide-react";
 import { BigButton } from "../buttons/big-button";
+import { getCsrfToken } from "next-auth/react";
 
 interface SideModalProps {
   isOpen: boolean;
@@ -38,10 +39,12 @@ export function SideModal({
     if (!endPoint) {
       return;
     }
+    const csrfToken = await getCsrfToken();
     const response = await fetch(endPoint, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${csrfToken}`,
       },
       body: JSON.stringify(data),
     });

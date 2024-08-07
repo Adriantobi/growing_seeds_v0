@@ -3,6 +3,7 @@
 import { DetailTransaction } from "@/components/detail-transaction";
 import { SmallButton } from "@/components/ui/buttons/small-button";
 import { Table } from "@/components/ui/table/table";
+import { signOut } from "next-auth/react";
 import Image from "next/image";
 import { Suspense, useState } from "react";
 
@@ -30,6 +31,12 @@ export default function Dashboard() {
             onClick={() => setIsModalOpen(true)}
           >
             Add payment
+          </SmallButton>
+          <SmallButton
+            className="bg-red-500 hover:bg-red-600 text-white"
+            onClick={() => signOut()}
+          >
+            Logout
           </SmallButton>
         </div>
       </div>

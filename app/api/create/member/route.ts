@@ -51,7 +51,6 @@ export async function POST(req: Request, res: Response) {
     department: department || null,
   };
   try {
-    console.log(data);
     const newMember = await createMember(data);
     return NextResponse.json(
       { message: "Member successfully created" },
