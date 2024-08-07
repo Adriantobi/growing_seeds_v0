@@ -1,23 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { supabase } from "@/lib/db";
 
 export async function POST(req: NextRequest) {
   const data = await req.formData();
-  const photo = data.get("photo") as File;
+  const image = data.get("image") as File;
+  const path = data.get("path") as string;
 
   try {
-    const supabase = createClient(
-      process.env.SUPABASE_URL!,
-      process.env.SUPABASE_ANON_KEY!,
-    );
+    const imageName = path ? `${path}/${image.name}` : image.name;
     const response = await supabase.storage
       .from("images")
-      .upload(photo.name, photo, {
+      .upload(imageName, image, {
         cacheControl: "3600",
         upsert: false,
       });
 
-    const url = supabase.storage.from("images").getPublicUrl(photo.name);
+    const url = supabase.storage.from("images").getPublicUrl(imageName);
 
     if (response.error) {
       return NextResponse.json(

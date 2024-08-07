@@ -7,7 +7,7 @@ import {
 } from "@/lib/queries";
 import authConfig from "@/auth.config";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import prisma from "@/lib/db";
+import { prisma } from "@/lib/db";
 
 const authOptions: AuthOptions = {
   pages: {
@@ -39,10 +39,7 @@ const authOptions: AuthOptions = {
         const existingUser = await getUserByEmail(user.email!);
 
         if (existingUser) {
-          await updateUserAuthToken(
-            existingUser.id,
-            token.accessToken! as string,
-          );
+          await updateUserAuthToken(existingUser.id, "cool beens");
         }
       }
       return token;
