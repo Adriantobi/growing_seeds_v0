@@ -1,4 +1,8 @@
-import { checkAuthValidity, createMember } from "@/lib/queries";
+import {
+  checkAuthValidity,
+  createMember,
+  getChurchByEmail,
+} from "@/lib/queries";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -58,12 +62,14 @@ export async function POST(req: NextRequest, res: NextResponse) {
     );
   }
 
+  const churchId = await getChurchByEmail(session?.user?.email!);
+
   const data = {
     firstName,
     lastName: lastName || null,
     image: image || null,
     memberId,
-    churchId: "clziqkjpt00019o24f799nodp",
+    churchId: churchId!,
     birthDate: birthDate || null,
     email: email || null,
     phone: phone || null,

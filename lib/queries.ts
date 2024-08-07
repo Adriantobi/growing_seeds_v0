@@ -196,15 +196,23 @@ export async function updateUserAuthToken(id: string, token: string) {
 }
 
 export async function getChurchByUserId(id: string) {
-  return prisma.church.findFirst({
-    where: {
-      users: {
-        some: {
-          id: id,
-        },
+  return prisma.user
+    .findUnique({
+      where: {
+        id: id,
       },
-    },
-  });
+    })
+    .then((user) => user?.churchId);
+}
+
+export async function getChurchByEmail(email: string) {
+  return prisma.user
+    .findUnique({
+      where: {
+        email: email,
+      },
+    })
+    .then((user) => user?.churchId);
 }
 
 export async function checkAuthValidity(email: string, token: string) {
