@@ -28,7 +28,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     );
   }
 
-  if (contentType !== "application/x-www-form-urlencoded") {
+  if (!contentType?.includes("multipart/form-data")) {
     return NextResponse.json(
       { error: "Invalid content type" },
       { status: 415 },
@@ -37,7 +37,12 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
   const data = await req.formData();
   const image = data.get("image") as File;
-  const path = data.get("path") as string;
+  const path = data.get("path");
+  console.log(image, path);
+
+  if (!image) {
+    return NextResponse.json({ error: "Image is required" }, { status: 400 });
+  }
 
   try {
     const imageName = path ? `${path}/${image.name}` : image.name;
@@ -67,7 +72,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     );
   } catch (error) {
     return NextResponse.json(
-      { error: (error as Error).message },
+      { error: (error as Error).message || "An unknown error occurred" },
       { status: 500 },
     );
   }

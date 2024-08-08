@@ -1,29 +1,39 @@
 import { getCsrfToken, useSession } from "next-auth/react";
 import { CenterModal } from "./ui/modals/center-modal";
-import { getUserDetails } from "@/lib/queries";
 import { user } from "@/types";
 import Input from "./ui/input/input";
 import Image from "next/image";
 import { BigButton } from "./ui/buttons/big-button";
+import { ChangeEvent } from "react";
 
 interface AccountDetailsProps {
   user: user | null;
   isOpen: boolean;
   onClose: () => void;
 }
+
 export function AccountDetails({ isOpen, onClose, user }: AccountDetailsProps) {
-  // async function uploadNewImage(image: File) {
-  //   const token = getCsrfToken();
-  //   const response = await fetch("/api/upload/image", {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: `${token}`,
-  //     },
-  //   });
-  //
-  //   const res = await response.json()
-  //   if (response.ok) {}
-  // }
+  async function uploadNewImage(image: File) {
+    const formData = new FormData();
+    formData.append("image", image);
+    console.log(image);
+    formData.append("path", "profile");
+    const response = await getCsrfToken().then((token) => {
+      return fetch("/api/upload/image", {
+        method: "POST",
+        headers: {
+          Authorization: `${token}`,
+        },
+        body: formData,
+      });
+    });
+
+    const res = await response.json();
+    if (!response.ok) {
+      console.error(res.error);
+    }
+  }
+
   return (
     <CenterModal
       isOpen={isOpen}
@@ -55,7 +65,16 @@ export function AccountDetails({ isOpen, onClose, user }: AccountDetailsProps) {
               </div>
               <div className="flex gap-2 items-center">
                 <div className="flex flex-row items-center">
-                  <input type="file" id="custom-input" hidden />
+                  <input
+                    type="file"
+                    id="custom-input"
+                    accept="image/*"
+                    onChange={(e: any) => {
+                      uploadNewImage(e.target.files[0]);
+                      e.target.value = null;
+                    }}
+                    hidden
+                  />
                   <label
                     htmlFor="custom-input"
                     className="border border-zinc-800 bg-zinc-800 bg-opacity-50 hover:bg-opacity-70 gap-1 text-sm flex rounded-lg px-4 py-2 cursor-pointer"
@@ -66,7 +85,6 @@ export function AccountDetails({ isOpen, onClose, user }: AccountDetailsProps) {
                 <BigButton
                   className="bg-red-500 hover:bg-red-700"
                   position="center"
-                  type="submit"
                 >
                   Delete
                 </BigButton>
@@ -74,10 +92,10 @@ export function AccountDetails({ isOpen, onClose, user }: AccountDetailsProps) {
             </div>
           </div>
           <div className="flex flex-col gap-2 mt-4">
-            <label className="text-muted-foreground text-sm" htmlFor="email">
+            <label className="text-muted-foreground text-sm" htmlFor="name">
               Name
             </label>
-            <Input type="text" value={user.name} />
+            <Input type="text" defaultValue={user.name} />
           </div>
           <div className="flex flex-col gap-2">
             <label className="text-muted-foreground text-sm" htmlFor="email">
@@ -85,7 +103,7 @@ export function AccountDetails({ isOpen, onClose, user }: AccountDetailsProps) {
             </label>
             <Input
               type="text"
-              value={user.email}
+              placeholder={user.email}
               disabled={true}
               className="cursor-not-allowed"
             />

@@ -93,12 +93,12 @@ export function SideBarClient({ user }: SideBarClientProps) {
                 >
                   <span
                     className="flex w-full px-2 py-2 hover:bg-zinc-800 bg-opacity-70 cursor-pointer items-center gap-2 text-sm rounded-lg"
-                    onClick={() => setUserMenu(true)}
+                    onClick={() => {
+                      setExpanded(false);
+                      setUserMenu(true);
+                    }}
                   >
                     <Profile size={"16"} strokeWidth={1.5} /> Account details
-                  </span>
-                  <span className="flex w-full px-2 py-2 hover:bg-zinc-800 bg-opacity-70 cursor-pointer items-center gap-2 text-sm rounded-lg">
-                    <Setting2 size={"16"} strokeWidth={1.5} /> View settings
                   </span>
                   <span className="flex w-full px-2 py-2 hover:bg-zinc-800 bg-opacity-70 cursor-pointer items-center gap-2 text-sm rounded-lg">
                     <ZapIcon size={"16"} strokeWidth={1.5} /> Upgrade plan
