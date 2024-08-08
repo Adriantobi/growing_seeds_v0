@@ -225,3 +225,11 @@ export async function checkAuthValidity(email: string, token: string) {
     },
   });
 }
+
+export async function getUserDetails(email: string) {
+  return prisma.user.findUnique({
+    where: {
+      email: email,
+    },
+  });
+}

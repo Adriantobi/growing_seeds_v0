@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
 import { NextAuthProvider } from "../Providers";
-import { SideBar } from "@/components/side-bar";
+import { SideBar } from "@/components/sidebar/side-bar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description: "Growing Seeds web app",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

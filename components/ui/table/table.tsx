@@ -12,16 +12,16 @@ interface TableProps {
   pagination?: PaginationProps;
 }
 
-function getParamNames(func: any) {
-  const STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/gm;
-  const ARGUMENT_NAMES = /([^\s,]+)/g;
-  let fnStr = func.toString().replace(STRIP_COMMENTS, "");
-  let result = fnStr
-    .slice(fnStr.indexOf("(") + 1, fnStr.indexOf(")"))
-    .match(ARGUMENT_NAMES);
-  if (result === null) result = [];
-  return result;
-}
+// function getParamNames(func: any) {
+//   const STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/gm;
+//   const ARGUMENT_NAMES = /([^\s,]+)/g;
+//   let fnStr = func.toString().replace(STRIP_COMMENTS, "");
+//   let result = fnStr
+//     .slice(fnStr.indexOf("(") + 1, fnStr.indexOf(")"))
+//     .match(ARGUMENT_NAMES);
+//   if (result === null) result = [];
+//   return result;
+// }
 
 export function Table({ headers, data, templates, pagination }: TableProps) {
   return (
@@ -50,13 +50,7 @@ export function Table({ headers, data, templates, pagination }: TableProps) {
                   key={header}
                   className="px-4 py-2 text-sm text-nowrap overflow-ellipsis first-of-type:rounded-l-xl last-of-type:rounded-r-xl"
                 >
-                  {templates?.[header]
-                    ? templates[header](
-                        ...getParamNames(templates[header]).map(
-                          (param: string) => row[param],
-                        ),
-                      )
-                    : row[header]}
+                  {templates?.[header] ? templates[header](row) : row[header]}
                 </td>
               ))}
             </tr>

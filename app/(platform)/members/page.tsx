@@ -113,7 +113,7 @@ export default function Members() {
           totalRows: 100,
         }}
         templates={{
-          member: (member) => (
+          member: ({ member }) => (
             <Link
               href={`/member/${member?.id || "0"}`}
               className="flex gap-2 items-center"
@@ -140,12 +140,12 @@ export default function Members() {
               <span>{member?.name! || ""}</span>
             </Link>
           ),
-          createdDate: (createdDate, time) => (
+          createdDate: ({ createdDate, time }) => (
             <span>
               {createdDate},&nbsp;<span className="text-zinc-500">{time}</span>
             </span>
           ),
-          memberId: (memberId) => (
+          memberId: ({ memberId }) => (
             <span className="flex flex-nowrap items-center px-2.5 py-1 border border-zinc-800 rounded-full w-fit text-xs">
               <p className="text-zinc-500 text-opacity-70">#CEWA</p>
               {memberId}

@@ -124,7 +124,7 @@ export default function Dashboard() {
               },
             ]}
             templates={{
-              member: (member) => (
+              member: ({ member }) => (
                 <div className="flex gap-2 items-center">
                   <div className="w-6 aspect-square overflow-hidden rounded-full">
                     <Suspense
@@ -132,7 +132,7 @@ export default function Dashboard() {
                         <div className="w-6 h-6 bg-zinc-800 rounded-full animate-pulse"></div>
                       }
                     >
-                      {member && member?.image! && (
+                      {member && member.image && (
                         <Image
                           src={member?.image!}
                           width={0}
@@ -145,15 +145,15 @@ export default function Dashboard() {
                       )}
                     </Suspense>
                   </div>
-                  <span>{member?.name! || ""}</span>
+                  <span>{member.name || ""}</span>
                 </div>
               ),
-              date: (date, time) => (
+              date: ({ date, time }) => (
                 <span>
                   {date},&nbsp;<span className="text-zinc-500">{time}</span>
                 </span>
               ),
-              status: (status) => (
+              status: ({ status }) => (
                 <span className="flex flex-nowrap items-center px-2.5 py-1 gap-1.5 border border-zinc-800 rounded-full w-fit">
                   {status === "Settled" ? (
                     <span className="bg-green-500 w-1.5 h-1.5 min-w-1.5 min-h-1.5 rounded-full"></span>

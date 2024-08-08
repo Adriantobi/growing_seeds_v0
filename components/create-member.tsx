@@ -16,10 +16,10 @@ export function CreateMember({ isOpen, onClose }: CreateMemberProps) {
       subheader="Add a new member to the system"
       endPoint="/api/create/member"
     >
-      <div className="flex flex-col h-full overflow-y-auto gap-3 no-scrollbar">
+      <div className="flex flex-col h-full overflow-y-auto gap-4 no-scrollbar">
         <div className="flex flex-col gap-2">
           <label
-            className="text-muted-foreground text-sm mt-3"
+            className="text-muted-foreground text-sm mt-4"
             htmlFor="memberId"
           >
             Member Id *
@@ -32,10 +32,7 @@ export function CreateMember({ isOpen, onClose }: CreateMemberProps) {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label
-            className="text-muted-foreground text-sm mt-3"
-            htmlFor="firstName"
-          >
+          <label className="text-muted-foreground text-sm" htmlFor="firstName">
             First Name *
           </label>
           <Input
@@ -125,7 +122,7 @@ export function CreateMember({ isOpen, onClose }: CreateMemberProps) {
             placeholder="Technical Support"
           />
         </div>
-        <div className="flex flex-col gap-2 mb-3">
+        <div className="flex flex-col gap-2 mb-4">
           <label
             className="text-muted-foreground text-sm"
             htmlFor="maritalStatus"

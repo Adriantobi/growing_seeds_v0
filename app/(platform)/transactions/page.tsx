@@ -135,7 +135,7 @@ export default function Transactions() {
         ]}
         data={transactions}
         templates={{
-          member: (member) => (
+          member: ({ member }) => (
             <Link
               href={`/member/${member?.id || "0"}`}
               className="flex gap-2 items-center"
@@ -162,12 +162,12 @@ export default function Transactions() {
               <span>{member?.name! || ""}</span>
             </Link>
           ),
-          date: (date, time) => (
+          date: ({ date, time }) => (
             <span>
               {date},&nbsp;<span className="text-zinc-500">{time}</span>
             </span>
           ),
-          status: (status) => (
+          status: ({ status }) => (
             <span className="flex flex-nowrap items-center px-2.5 py-1 gap-1.5 border border-zinc-800 rounded-full w-fit">
               {status === "Settled" ? (
                 <span className="bg-green-500 w-1.5 h-1.5 min-w-1.5 min-h-1.5 rounded-full"></span>
