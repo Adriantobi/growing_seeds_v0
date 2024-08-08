@@ -90,7 +90,7 @@ export function SideBar() {
                   <Setting2 size={"16"} strokeWidth={1.5} /> View settings
                 </span>
                 <span className="flex w-full px-2 py-2 hover:bg-zinc-800 bg-opacity-70 cursor-pointer items-center gap-2 text-sm rounded-lg">
-                  <ZapIcon size={"16"} strokeWidth={1.5} /> View settings
+                  <ZapIcon size={"16"} strokeWidth={1.5} /> Upgrade plan
                 </span>
                 <span
                   className="flex w-full px-2 py-2 hover:bg-zinc-800 bg-opacity-70 cursor-pointer items-center gap-2 text-sm rounded-lg justify-between"

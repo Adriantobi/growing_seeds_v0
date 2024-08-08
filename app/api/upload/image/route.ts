@@ -58,7 +58,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
     }
 
     return NextResponse.json(
-      { message: "Image uploaded successfully", url: url.data?.publicUrl },
+      {
+        message: "Image uploaded successfully",
+        url: url.data?.publicUrl,
+        image_name: imageName,
+      },
       { status: 200 },
     );
   } catch (error) {
