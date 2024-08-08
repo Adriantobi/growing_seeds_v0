@@ -131,7 +131,7 @@ export default function Transactions() {
           "member",
           "amount",
           "category",
-          "paymentMethod",
+          { name: "Payment Method", value: "paymentMethod" },
         ]}
         data={transactions}
         templates={{

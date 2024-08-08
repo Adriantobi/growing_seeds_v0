@@ -5,23 +5,17 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
+interface HeaderProps {
+  name: string;
+  value: string;
+}
+
 interface TableProps {
-  headers: string[];
+  headers: (HeaderProps | string)[];
   data: Record<string, any>[];
   templates?: Record<string, (...args: any) => JSX.Element>;
   pagination?: PaginationProps;
 }
-
-// function getParamNames(func: any) {
-//   const STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/gm;
-//   const ARGUMENT_NAMES = /([^\s,]+)/g;
-//   let fnStr = func.toString().replace(STRIP_COMMENTS, "");
-//   let result = fnStr
-//     .slice(fnStr.indexOf("(") + 1, fnStr.indexOf(")"))
-//     .match(ARGUMENT_NAMES);
-//   if (result === null) result = [];
-//   return result;
-// }
 
 export function Table({ headers, data, templates, pagination }: TableProps) {
   return (
@@ -31,10 +25,13 @@ export function Table({ headers, data, templates, pagination }: TableProps) {
           <tr className="bg-zinc-800 sticky top-0">
             {headers.map((header) => (
               <th
-                key={header}
+                key={typeof header === "string" ? header : header.value}
                 className="text-sm font-normal px-4 py-2 text-left text-zinc-500 first-of-type:rounded-l-xl last-of-type:rounded-r-xl"
               >
-                {header.charAt(0).toUpperCase() + header.slice(1)}
+                {(typeof header === "string" ? header : header.name)
+                  .charAt(0)
+                  .toUpperCase() +
+                  (typeof header === "string" ? header : header.name).slice(1)}
               </th>
             ))}
           </tr>
@@ -47,10 +44,16 @@ export function Table({ headers, data, templates, pagination }: TableProps) {
             >
               {headers.map((header) => (
                 <td
-                  key={header}
+                  key={typeof header === "string" ? header : header.value}
                   className="px-4 py-2 text-sm text-nowrap overflow-ellipsis first-of-type:rounded-l-xl last-of-type:rounded-r-xl"
                 >
-                  {templates?.[header] ? templates[header](row) : row[header]}
+                  {templates?.[
+                    typeof header === "string" ? header : header.value
+                  ]
+                    ? templates[
+                        typeof header === "string" ? header : header.value
+                      ](row)
+                    : row[typeof header === "string" ? header : header.value]}
                 </td>
               ))}
             </tr>

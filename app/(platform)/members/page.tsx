@@ -104,7 +104,11 @@ export default function Members() {
         </div>
       </div>
       <Table
-        headers={["createdDate", "member", "memberId"]}
+        headers={[
+          { name: "created date", value: "createdDate" },
+          "member",
+          { name: "Member ID", value: "memberId" },
+        ]}
         data={members}
         pagination={{
           totalPages: 4,

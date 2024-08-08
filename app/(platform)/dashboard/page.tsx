@@ -47,7 +47,7 @@ export default function Dashboard() {
               "member",
               "amount",
               "category",
-              "paymentMethod",
+              { name: "Payment Method", value: "paymentMethod" },
             ]}
             data={[
               {
