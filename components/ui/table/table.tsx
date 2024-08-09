@@ -5,15 +5,19 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
-interface HeaderProps {
+interface Header {
   name: string;
   value: string;
 }
 
+interface Row {
+  [key: string]: Row | string | number | boolean | Date;
+}
+
 interface TableProps {
-  headers: (HeaderProps | string)[];
-  data: Record<string, any>[];
-  templates?: Record<string, (...args: any) => JSX.Element>;
+  headers: (Header | string)[];
+  data: Row[];
+  templates?: Record<string, (row: Row) => JSX.Element>;
   pagination?: PaginationProps;
 }
 

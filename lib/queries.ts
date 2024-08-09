@@ -227,9 +227,14 @@ export async function checkAuthValidity(email: string, token: string) {
 }
 
 export async function getUserDetails(email: string) {
-  return prisma.user.findUnique({
-    where: {
-      email: email,
-    },
-  });
+  return prisma.user
+    .findUnique({
+      where: {
+        email: email,
+      },
+    })
+    .then((user) => {
+      prisma.$disconnect();
+      return user;
+    });
 }

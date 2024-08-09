@@ -1,11 +1,11 @@
 "use client";
-
 import { DetailTransaction } from "@/components/detail-transaction";
 import { SmallButton } from "@/components/ui/buttons/small-button";
 import { Table } from "@/components/ui/table/table";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { Suspense, useState } from "react";
+import { Bar, BarChart, ResponsiveContainer } from "recharts";
 
 export default function Dashboard() {
   const { data } = useSession();
@@ -16,6 +16,44 @@ export default function Dashboard() {
     month: "long",
     day: "numeric",
   });
+  const chartData = [
+    { month: "January", desktop: 186, mobile: 80 },
+    { month: "February", desktop: 305, mobile: 200 },
+    { month: "March", desktop: 237, mobile: 120 },
+    { month: "April", desktop: 73, mobile: 190 },
+    { month: "May", desktop: 209, mobile: 130 },
+    { month: "June", desktop: 214, mobile: 140 },
+    {
+      month: "July",
+      desktop: 200,
+      mobile: 140,
+    },
+    {
+      month: "August",
+      desktop: 200,
+      mobile: 140,
+    },
+    {
+      month: "September",
+      desktop: 200,
+      mobile: 140,
+    },
+    {
+      month: "October",
+      desktop: 200,
+      mobile: 140,
+    },
+    {
+      month: "November",
+      desktop: 200,
+      mobile: 140,
+    },
+    {
+      month: "December",
+      desktop: 200,
+      mobile: 140,
+    },
+  ];
   return (
     <div className="flex flex-col gap-3">
       <div className="flex justify-between w-full sticky top-0 py-3 bg-[#121212]">
@@ -36,7 +74,13 @@ export default function Dashboard() {
         </div>
       </div>
       <div className="grid grid-cols-3 gap-4 mb-4">
-        <div className="flex col-span-2 bg-zinc-800 bg-opacity-50 h-80 rounded-2xl"></div>
+        <div className="flex col-span-2 bg-zinc-800 bg-opacity-50 h-80 rounded-2xl">
+          {/*<ResponsiveContainer width="100%" height="100%">
+            <BarChart width={150} height={40} data={chartData}>
+              <Bar dataKey="desktop" fill="#f34a22" radius={4} />
+            </BarChart>
+          </ResponsiveContainer>*/}
+        </div>
         <div className="flex col-span-1 bg-zinc-800 bg-opacity-50 h-80 rounded-2xl"></div>
         <div className="flex col-span-3 bg-zinc-800 bg-opacity-50 h-80 rounded-2xl"></div>
         <div className="flex col-span-3 bg-zinc-800 bg-opacity-30 h-80 rounded-2xl p-4">
