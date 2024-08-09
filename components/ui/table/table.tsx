@@ -10,14 +10,10 @@ interface Header {
   value: string;
 }
 
-interface Row {
-  [key: string]: Row | string | number | boolean | Date;
-}
-
 interface TableProps {
   headers: (Header | string)[];
-  data: Row[];
-  templates?: Record<string, (row: Row) => JSX.Element>;
+  data: Record<string, any>[];
+  templates?: Record<string, (row: Record<string, any>) => JSX.Element>;
   pagination?: PaginationProps;
 }
 
