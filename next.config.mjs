@@ -22,6 +22,20 @@ const nextConfig = {
       },
     ],
   },
+  async headers() {
+    return [
+      {
+        source: "/api/:path*",
+        headers: [
+          {
+            key: "Access-Control-Allow-Origin",
+            value:
+              "http://growing-seed-v0.vercel.app, https://growing-seed-v0.vercel.app, http://localhost:3000, https://localhost:3000",
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;
