@@ -1,6 +1,8 @@
 "use client";
 import { DetailTransaction } from "@/components/detail-transaction";
 import { SmallButton } from "@/components/ui/buttons/small-button";
+import { BarGraph } from "@/components/ui/charts/bar-graph";
+import { LineGraph } from "@/components/ui/charts/line-graph";
 import { Table } from "@/components/ui/table/table";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -17,53 +19,6 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-
-function CustomTooltip({ active, payload, label }: any) {
-  if (active && payload.length) {
-    return (
-      <div className="bg-zinc-900 rounded-lg text-sm px-4 py-2 border border-zinc-800">
-        <p className="label">{label}</p>
-        <div className="flex flex-col">
-          {payload.map((pld: any, index: number) => (
-            <div className="flex gap-2 items-center" key={index}>
-              <div
-                style={{ background: pld.color ? pld.color : "#fff" }}
-                className="w-2 h-2 rounded-full"
-              ></div>
-              <div className="flex gap-4 items-center">
-                <div className="text-zinc-500">
-                  {pld.dataKey.split("")[0].toUpperCase() +
-                    pld.dataKey.slice(1)}
-                </div>
-                <div>{pld.value}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  return null;
-}
-
-function CustomLegend({ payload }: any) {
-  return (
-    <div className="flex gap-4 justify-end text-sm">
-      {payload.map((entry: any, index: number) => (
-        <div key={`item-${index}`} className="flex gap-2 items-center">
-          <div
-            style={{ background: entry.color }}
-            className="w-2 h-2 rounded-full"
-          ></div>
-          <span className="text-zinc-500">
-            {entry.value.split("")[0].toUpperCase() + entry.value.slice(1)}
-          </span>
-        </div>
-      ))}
-    </div>
-  );
-}
 
 export default function Dashboard() {
   const { data } = useSession();
@@ -190,48 +145,35 @@ export default function Dashboard() {
                 </SmallButton>
               </div>
             </div>
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                width={150}
-                height={40}
-                margin={{
-                  left: -20,
-                  right: 0,
-                }}
-                data={chartData}
-                accessibilityLayer={false}
-              >
-                <XAxis
-                  dataKey="month"
-                  tickLine={false}
-                  tickMargin={10}
-                  axisLine={false}
-                  className="text-sm"
-                  tickFormatter={(value) => value.slice(0, 3).toUpperCase()}
-                />
-                <YAxis
-                  dataKey="partnership"
-                  tickLine={false}
-                  tickMargin={0}
-                  axisLine={false}
-                  className="text-sm"
-                />
-                <Tooltip wrapperClassName="rounded-lg text-sm" cursor={false} />
-                <Bar
-                  dataKey="partnership"
-                  className="fill-zinc-800"
-                  barSize={35}
-                  radius={4}
-                  activeBar={
-                    <Rectangle className="fill-[#f3876f] bg-transparent" />
-                  }
-                />{" "}
-                {/*[#f34a22]*/}
-              </BarChart>
-            </ResponsiveContainer>
+            <BarGraph
+              data={chartData}
+              xKey="month"
+              yKey="partnership"
+              barKey="partnership"
+            />
           </div>
         </div>
-        <div className="flex col-span-1 bg-zinc-800 bg-opacity-50 h-80 rounded-2xl"></div>
+        <div className="flex col-span-1 bg-zinc-800 bg-opacity-50 h-80 rounded-2xl p-4">
+          <div className="flex flex-col w-full gap-4">
+            <div className="grid grid-cols-2 w-full">
+              <div className="flex flex-col gap-2">
+                <span className="text-sm">Cashflow</span>
+                <span className="flex gap-1">
+                  <p className="text-zinc-500">£</p>
+                  <h3 className="text-3xl">8,643.42</h3>
+                </span>
+              </div>
+              <div className="flex items-start justify-end">
+                <SmallButton
+                  className="bg-transparen text-zinc-500"
+                  onClick={() => setIsModalOpen(true)}
+                >
+                  View more
+                </SmallButton>
+              </div>
+            </div>
+          </div>
+        </div>
         <div className="flex col-span-3 bg-zinc-800 bg-opacity-50 h-80 rounded-2xl p-4">
           <div className="flex flex-col w-full gap-4">
             <div className="flex w-full items-center justify-between">
@@ -242,50 +184,12 @@ export default function Dashboard() {
                 </SmallButton>
               </div>
             </div>
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart
-                accessibilityLayer={false}
-                data={lineData}
-                margin={{
-                  left: 18,
-                  right: 18,
-                }}
-              >
-                <XAxis
-                  dataKey="month"
-                  tickLine={false}
-                  axisLine={false}
-                  tickMargin={8}
-                  className="text-sm"
-                  tickFormatter={(value) => value.slice(0, 3).toUpperCase()}
-                />
-                <Tooltip
-                  cursor={false}
-                  content={
-                    <CustomTooltip active={false} payload={[]} label={""} />
-                  }
-                />
-                <Legend
-                  verticalAlign="top"
-                  height={36}
-                  content={<CustomLegend />}
-                />
-                <Line
-                  dataKey="partnership"
-                  type="linear"
-                  stroke="#00d693"
-                  strokeWidth={2}
-                  dot={false}
-                />
-                <Line
-                  dataKey="offerings"
-                  type="linear"
-                  stroke="#bd553c"
-                  strokeWidth={2}
-                  dot={false}
-                />
-              </LineChart>
-            </ResponsiveContainer>
+            <LineGraph
+              data={lineData}
+              xKey="month"
+              line1="partnership"
+              line2="offerings"
+            />
           </div>
         </div>
         <div className="flex col-span-3 bg-zinc-800 bg-opacity-30 h-80 rounded-2xl p-4">
