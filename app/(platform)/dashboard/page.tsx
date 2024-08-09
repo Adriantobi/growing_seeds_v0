@@ -5,7 +5,65 @@ import { Table } from "@/components/ui/table/table";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { Suspense, useState } from "react";
-import { Bar, BarChart, ResponsiveContainer } from "recharts";
+import {
+  Bar,
+  BarChart,
+  Legend,
+  Line,
+  LineChart,
+  Rectangle,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
+
+function CustomTooltip({ active, payload, label }: any) {
+  if (active && payload.length) {
+    return (
+      <div className="bg-zinc-900 rounded-lg text-sm px-4 py-2 border border-zinc-800">
+        <p className="label">{label}</p>
+        <div className="flex flex-col">
+          {payload.map((pld: any, index: number) => (
+            <div className="flex gap-2 items-center" key={index}>
+              <div
+                style={{ background: pld.color ? pld.color : "#fff" }}
+                className="w-2 h-2 rounded-full"
+              ></div>
+              <div className="flex gap-4 items-center">
+                <div className="text-zinc-500">
+                  {pld.dataKey.split("")[0].toUpperCase() +
+                    pld.dataKey.slice(1)}
+                </div>
+                <div>{pld.value}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  return null;
+}
+
+function CustomLegend({ payload }: any) {
+  return (
+    <div className="flex gap-4 justify-end text-sm">
+      {payload.map((entry: any, index: number) => (
+        <div key={`item-${index}`} className="flex gap-2 items-center">
+          <div
+            style={{ background: entry.color }}
+            className="w-2 h-2 rounded-full"
+          ></div>
+          <span className="text-zinc-500">
+            {entry.value.split("")[0].toUpperCase() + entry.value.slice(1)}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export default function Dashboard() {
   const { data } = useSession();
@@ -17,46 +75,85 @@ export default function Dashboard() {
     day: "numeric",
   });
   const chartData = [
-    { month: "January", desktop: 186, mobile: 80 },
-    { month: "February", desktop: 305, mobile: 200 },
-    { month: "March", desktop: 237, mobile: 120 },
-    { month: "April", desktop: 73, mobile: 190 },
-    { month: "May", desktop: 209, mobile: 130 },
-    { month: "June", desktop: 214, mobile: 140 },
+    { month: "January", partnership: 186, offerings: 80 },
+    { month: "February", partnership: 305, offerings: 200 },
+    { month: "March", partnership: 237, offerings: 120 },
+    { month: "April", partnership: 73, offerings: 190 },
+    { month: "May", partnership: 209, offerings: 130 },
+    { month: "June", partnership: 214, offerings: 140 },
     {
       month: "July",
-      desktop: 200,
-      mobile: 140,
+      partnership: 432,
+      offerings: 230,
     },
     {
       month: "August",
-      desktop: 200,
-      mobile: 140,
+      partnership: 345,
+      offerings: 200,
     },
     {
       month: "September",
-      desktop: 200,
-      mobile: 140,
+      partnership: 234,
+      offerings: 120,
     },
     {
       month: "October",
-      desktop: 200,
-      mobile: 140,
+      partnership: 123,
+      offerings: 90,
     },
     {
       month: "November",
-      desktop: 200,
-      mobile: 140,
+      partnership: 821,
+      offerings: 923,
     },
     {
       month: "December",
-      desktop: 200,
-      mobile: 140,
+      partnership: 323,
+      offerings: 210,
+    },
+  ];
+
+  const lineData = [
+    { month: "January", partnership: 186, offerings: 80 },
+    { month: "February", partnership: 305, offerings: 200 },
+    { month: "March", partnership: 237, offerings: 120 },
+    { month: "April", partnership: 73, offerings: 190 },
+    { month: "May", partnership: 209, offerings: 130 },
+    { month: "June", partnership: 214, offerings: 140 },
+    {
+      month: "July",
+      partnership: 432,
+      offerings: 230,
+    },
+    {
+      month: "August",
+      partnership: 345,
+      offerings: 200,
+    },
+    {
+      month: "September",
+      partnership: 234,
+      offerings: 120,
+    },
+    {
+      month: "October",
+      partnership: 123,
+      offerings: 90,
+    },
+    {
+      month: "November",
+      partnership: 821,
+      offerings: 923,
+    },
+    {
+      month: "December",
+      partnership: 323,
+      offerings: 210,
     },
   ];
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex justify-between w-full sticky top-0 py-3 bg-[#121212]">
+      <div className="flex justify-between w-full sticky top-0 py-3 bg-[#121212] z-10">
         <span>
           Hey, {data?.user?.name}!
           <p className="text-sm text-zinc-500">{currentDate}</p>
@@ -74,15 +171,123 @@ export default function Dashboard() {
         </div>
       </div>
       <div className="grid grid-cols-3 gap-4 mb-4">
-        <div className="flex col-span-2 bg-zinc-800 bg-opacity-50 h-80 rounded-2xl">
-          {/*<ResponsiveContainer width="100%" height="100%">
-            <BarChart width={150} height={40} data={chartData}>
-              <Bar dataKey="desktop" fill="#f34a22" radius={4} />
-            </BarChart>
-          </ResponsiveContainer>*/}
+        <div className="flex col-span-2 bg-zinc-800 bg-opacity-50 h-auto rounded-2xl p-4">
+          <div className="flex flex-col w-full gap-4">
+            <div className="flex w-full items-center justify-between">
+              <div className="flex flex-col gap-2">
+                <span className="text-sm">Balance</span>
+                <span className="flex gap-1">
+                  <p className="text-zinc-500">£</p>
+                  <h3 className="text-3xl">89,643.02</h3>
+                </span>
+              </div>
+              <div>
+                <SmallButton
+                  className="bg-white text-black"
+                  onClick={() => setIsModalOpen(true)}
+                >
+                  Add payment
+                </SmallButton>
+              </div>
+            </div>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart
+                width={150}
+                height={40}
+                margin={{
+                  left: -20,
+                  right: 0,
+                }}
+                data={chartData}
+                accessibilityLayer={false}
+              >
+                <XAxis
+                  dataKey="month"
+                  tickLine={false}
+                  tickMargin={10}
+                  axisLine={false}
+                  className="text-sm"
+                  tickFormatter={(value) => value.slice(0, 3).toUpperCase()}
+                />
+                <YAxis
+                  dataKey="partnership"
+                  tickLine={false}
+                  tickMargin={0}
+                  axisLine={false}
+                  className="text-sm"
+                />
+                <Tooltip wrapperClassName="rounded-lg text-sm" cursor={false} />
+                <Bar
+                  dataKey="partnership"
+                  className="fill-zinc-800"
+                  barSize={35}
+                  radius={4}
+                  activeBar={
+                    <Rectangle className="fill-[#f3876f] bg-transparent" />
+                  }
+                />{" "}
+                {/*[#f34a22]*/}
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
         </div>
         <div className="flex col-span-1 bg-zinc-800 bg-opacity-50 h-80 rounded-2xl"></div>
-        <div className="flex col-span-3 bg-zinc-800 bg-opacity-50 h-80 rounded-2xl"></div>
+        <div className="flex col-span-3 bg-zinc-800 bg-opacity-50 h-80 rounded-2xl p-4">
+          <div className="flex flex-col w-full gap-4">
+            <div className="flex w-full items-center justify-between">
+              <span className="text-sm">Giving Activity</span>
+              <div>
+                <SmallButton className="bg-white text-black" onClick={() => {}}>
+                  Filters
+                </SmallButton>
+              </div>
+            </div>
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart
+                accessibilityLayer={false}
+                data={lineData}
+                margin={{
+                  left: 18,
+                  right: 18,
+                }}
+              >
+                <XAxis
+                  dataKey="month"
+                  tickLine={false}
+                  axisLine={false}
+                  tickMargin={8}
+                  className="text-sm"
+                  tickFormatter={(value) => value.slice(0, 3).toUpperCase()}
+                />
+                <Tooltip
+                  cursor={false}
+                  content={
+                    <CustomTooltip active={false} payload={[]} label={""} />
+                  }
+                />
+                <Legend
+                  verticalAlign="top"
+                  height={36}
+                  content={<CustomLegend />}
+                />
+                <Line
+                  dataKey="partnership"
+                  type="linear"
+                  stroke="#00d693"
+                  strokeWidth={2}
+                  dot={false}
+                />
+                <Line
+                  dataKey="offerings"
+                  type="linear"
+                  stroke="#bd553c"
+                  strokeWidth={2}
+                  dot={false}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
         <div className="flex col-span-3 bg-zinc-800 bg-opacity-30 h-80 rounded-2xl p-4">
           <Table
             headers={[
