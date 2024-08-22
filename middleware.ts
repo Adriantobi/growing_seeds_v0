@@ -43,5 +43,4 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
   matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
-  unstable_allowDynamic: ["/node_modules/next-auth/react/index.js"],
 };
