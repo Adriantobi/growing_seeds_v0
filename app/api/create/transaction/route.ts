@@ -102,7 +102,7 @@ export async function POST(req: NextRequest) {
     try {
       await createEntry({
         memberId: member_id,
-        churchId: church_id,
+        churchId: churchId!,
         category: "offering",
         date: new Date().toISOString(),
         amount: o.amount,
