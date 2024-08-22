@@ -19,7 +19,7 @@ import { NavButton } from "./ui/buttons/nav-button";
 import useUserStore from "@/stores/user-store";
 
 export function SideBar() {
-  const { user } = useUserStore();
+  const { user, resetUser } = useUserStore();
   const [currentPage, setCurrentPage] = useState("dashboard");
   const [expanded, setExpanded] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
@@ -101,7 +101,10 @@ export function SideBar() {
                   </span>
                   <span
                     className="flex w-full px-2 py-2 hover:bg-zinc-800 bg-opacity-70 cursor-pointer items-center gap-2 text-sm rounded-lg justify-between"
-                    onClick={() => signOut()}
+                    onClick={() => {
+                      signOut();
+                      resetUser();
+                    }}
                   >
                     <span className="flex items-center gap-2">
                       <LogOutIcon size={"16"} strokeWidth={1.5} /> Log out
