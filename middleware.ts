@@ -6,7 +6,6 @@ import {
   publicRoutes,
 } from "./routes";
 import { getToken } from "next-auth/jwt";
-import { signOut } from "next-auth/react";
 import { checkTokenExpiration } from "./lib/auth-utils";
 import useUserStore from "./stores/user-store";
 
@@ -18,7 +17,6 @@ async function needsLogin(req: NextRequest) {
   const isAuthPath = authRoutes.includes(req.nextUrl.pathname);
   const authExpired = checkTokenExpiration(token?.user.authExpiresAt || "");
   if (authExpired) {
-    signOut();
     resetUser();
   }
   if (

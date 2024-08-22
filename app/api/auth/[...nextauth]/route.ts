@@ -6,6 +6,8 @@ import {
   updateUserAuthToken,
 } from "@/lib/queries";
 import authConfig from "@/auth.config";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { prisma } from "@/lib/db";
 import { checkTokenExpiration, generateSecureString } from "@/lib/auth-utils";
 import { User } from "@/stores/user-store";
 
@@ -56,6 +58,7 @@ const authOptions: AuthOptions = {
       return session;
     },
   },
+  adapter: PrismaAdapter(prisma),
   ...authConfig,
 };
 
