@@ -8,6 +8,7 @@ import {
 import { getToken } from "next-auth/jwt";
 import { checkTokenExpiration } from "./lib/auth-utils";
 import useUserStore from "./stores/user-store";
+import { signOut } from "next-auth/react";
 
 async function needsLogin(req: NextRequest) {
   const token = (await getToken({ req })) as { [key: string]: any } | null;
@@ -17,6 +18,7 @@ async function needsLogin(req: NextRequest) {
   const isAuthPath = authRoutes.includes(req.nextUrl.pathname);
   const authExpired = checkTokenExpiration(token?.user.authExpiresAt || "");
   if (authExpired) {
+    signOut();
     resetUser();
   }
   if (
