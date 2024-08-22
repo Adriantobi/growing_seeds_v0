@@ -115,7 +115,7 @@ export function SideBar() {
               <div className="flex items-center justify-center gap-3">
                 <SearchNormal1 size={"16"} color="#4a4a50" />
                 <input
-                  type="search"
+                  type="text"
                   placeholder="Search"
                   className="border-none bg-transparent text-sm text-zinc-600 placeholder-zinc-600 outline-none"
                 ></input>

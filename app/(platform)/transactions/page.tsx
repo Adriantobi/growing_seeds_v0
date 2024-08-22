@@ -101,6 +101,9 @@ export default function Transactions() {
             );
           },
           amount: ({ amount }) => <span>£{amount}</span>,
+          category: ({ category }) => (
+            <span>{category.charAt(0).toUpperCase() + category.slice(1)}</span>
+          ),
         }}
       />
       <CreateTransaction
