@@ -18,8 +18,12 @@ async function needsLogin(req: NextRequest) {
   const isAuthPath = authRoutes.includes(req.nextUrl.pathname);
   const authExpired = checkTokenExpiration(token?.user.authExpiresAt || "");
   if (authExpired) {
-    signOut();
+    const response = NextResponse.redirect(new URL(LOGIN_PATH, req.nextUrl));
+    response.cookies.delete("next-auth.session-token");
+    response.cookies.delete("__Secure-next-auth.session-token");
     resetUser();
+
+    return response;
   }
   if (
     (!isAuthenticated && !isPublicPath && !isAuthPath) ||
