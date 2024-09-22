@@ -59,9 +59,9 @@ export default function Members() {
           totalRows: 100,
         }}
         templates={{
-          firstName: ({ firstName, lastName, image, memberId }) => (
+          firstName: ({ firstName, lastName, image, id }) => (
             <Link
-              href={`/member/${memberId || "0"}`}
+              href={`/member/${id || "0"}`}
               className="flex gap-2 items-center"
             >
               <div className="w-6 aspect-square overflow-hidden rounded-full">
